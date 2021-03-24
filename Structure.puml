@@ -1,0 +1,98 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface ActionInput{
+    create() : void
+    destroy() : void
+    start() : void
+    stop() : void
+    restart() : void
+    pause() : void
+    resume() : void
+}
+
+interface Propagation{
+    propagate(EventObject evtObj) : ReturnableObject
+}
+
+interface RMIInput extends Remote{
+    call(EventObject evtObj) : ReturnableObject
+}
+
+interface HasManager{
+    getManager() : Manager
+}
+
+interface Remote{}
+
+class UnicastRemoteObject{}
+
+abstract class Identity {
+    - name { get } : String
+    - uniqueId : int
+    Identity(String name)
+}
+
+class "<u>Manager" as Manager extends Identity implements ActionInput, Propagation{
+        # <u>serviceList : Map<String, Service>
+        + create() : void
+        + destroy() : void
+        + start() : void
+        + stop() : void
+        + restart() : void
+        + pause() : void
+        + resume() : void
+        + propagate(EventObject evtObj) : ReturnableObject
+        + <u>iterateAll(Consumer<T> consumer) : <T>void
+        + getService(String key) : Service
+        + addService(Service service) : void
+        + destroyService(Service service) : void
+}
+
+class "<u>MainManager" as MainManager extends UnicastRemoteObject implements RMIInput, HasManager{
+    - manager : Manager
+    - sender : Sender
+    + getManager() : Manager
+    + setSender(Sender sender) : void
+    + getSender() : Sender
+    + call(EventObject evtObj) : ReturnableObject
+}
+
+class Service extends Identity implements EventInput{
+    - serviceVisibility : int
+    - passivePropagation : boolean
+    + onCreate() : void
+    + onDestroy() : void
+    + onStart() : void
+    + onStop() : void
+    + onPause() : void
+    + onResume() : void
+    + setVisibility(int value) : void
+    + getVisibility() : int
+    + setPassivePropagation(boolean value) : void
+    + getPassivePropagation() : boolean
+}
+
+class ServiceExtendable extends Service implements HasManager{
+    - manager : Manager
+    + getManager() : Manager
+    + onCreate() : void
+    + onDestroy() : void
+    + onStart() : void
+    + onStop() : void
+    + onPause() : void
+    + onResume() : void
+}
+
+interface EventInput{
+    onCreate() : void
+    onDestroy() : void
+    onStart() : void
+    onStop() : void
+    onRestart() : void
+    onPause() : void
+    onResume() : void
+    onEvent(EventObject evtObj) : ReturnableObject
+}
+
+@enduml
