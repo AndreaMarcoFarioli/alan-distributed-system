@@ -1,13 +1,9 @@
 package program;
 
-import core.EventObject;
-import core.ReturnableObject;
-import distributedArchitecture.RemoteNode;
-import exceptions.MalformedEventException;
-import exceptions.PropagationException;
+import bombe.core.data.EventObject;
+import bombe.core.data.ReturnableObject;
+import bombe.distributedArchitecture.RemoteNode;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 

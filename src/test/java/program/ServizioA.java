@@ -1,7 +1,6 @@
 package program;
 
-import core.Service;
-import core.definitions.ExtendableService;
+import bombe.core.ExtendableService;
 
 public class ServizioA extends ExtendableService {
     public ServizioA() {
@@ -9,7 +8,7 @@ public class ServizioA extends ExtendableService {
     }
 
     @Override
-    protected void onCreate() {
+    public void onCreate() {
         super.onCreate();
         System.out.println("creation");
     }

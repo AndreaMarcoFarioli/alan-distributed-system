@@ -1,25 +1,20 @@
 package program;
 
-import core.EventObject;
-import core.Manager;
-import core.ReturnableObject;
-import core.Service;
-import core.definitions.ExtendableService;
-import distributedArchitecture.MainManager;
-import exceptions.MalformedEventException;
-import exceptions.PropagationException;
+import bombe.core.ExtendableService;
+import bombe.distributedArchitecture.MainManager;
+import bombe.exceptions.MalformedEventException;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class Main {
-    public static void main(String[] args) throws RemoteException {
-        MainManager mainManager = new MainManager();
+    public static void main(String[] args) throws RemoteException, MalformedEventException {
         ExtendableService extendableService = new ServizioA();
         extendableService.getManager().addService(new ServizioA());
-        mainManager.getManager().addService(extendableService);
+        MainManager.getInstance().getManager().addService(extendableService);
+        MainManager.getInstance().getManager().create();
         Registry registry = LocateRegistry.createRegistry(1099);
-        registry.rebind("main", mainManager);
+        registry.rebind("main", MainManager.getInstance());
     }
 }
