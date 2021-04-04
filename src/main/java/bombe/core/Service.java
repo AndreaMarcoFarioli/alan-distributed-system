@@ -2,7 +2,6 @@ package bombe.core;
 
 import bombe.core.data.EventObject;
 import bombe.core.data.ReturnableObject;
-import bombe.core.definitions.AbstractService;
 import bombe.core.definitions.ServiceModel;
 
 public abstract class Service extends AbstractService {
@@ -17,4 +16,5 @@ public abstract class Service extends AbstractService {
     public final ReturnableObject<?> propagate(EventObject eventObject) throws Exception {
         return propagateInside(eventObject);
     }
+
 }

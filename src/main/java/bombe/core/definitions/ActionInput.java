@@ -1,5 +1,7 @@
 package bombe.core.definitions;
 
+import bombe.core.AbstractService;
+
 /**
  * @author Andrea Marco Farioli
  * @version 1
@@ -13,18 +15,11 @@ public interface ActionInput {
     void restart();
     void pause();
     void resume();
-
     void startService(AbstractService abstractService);
-
     void stopService(AbstractService abstractService);
-
     void destroyService(AbstractService abstractService);
-
     void createService(AbstractService abstractService);
-
     void restartService(AbstractService abstractService);
-
     void pauseService(AbstractService abstractService);
-
     void resumeService(AbstractService abstractService);
 }

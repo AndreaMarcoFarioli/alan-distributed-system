@@ -2,7 +2,6 @@ package bombe.core;
 
 import bombe.core.data.EventObject;
 import bombe.core.data.ReturnableObject;
-import bombe.core.definitions.AbstractService;
 import bombe.core.definitions.ServiceModel;
 import bombe.distributedArchitecture.HasManager;
 
@@ -29,8 +28,8 @@ public abstract class ExtendableService extends AbstractService implements HasMa
     }
 
     @Override
-    public Identity getIdentity() {
-        return super.getIdentity();
+    public Entity getEntity() {
+        return super.getEntity();
     }
 
     @Override

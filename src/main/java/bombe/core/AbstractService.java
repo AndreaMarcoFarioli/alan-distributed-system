@@ -1,16 +1,18 @@
-package bombe.core.definitions;
+package bombe.core;
 
-import bombe.core.*;
 import bombe.core.data.EventObject;
 import bombe.core.data.ReturnableObject;
+import bombe.core.definitions.EventPropagator;
+import bombe.core.definitions.ServiceModel;
+import bombe.distributedArchitecture.MainManager;
 import bombe.exceptions.PropagationException;
 
-public abstract class AbstractService implements EventPropagator, EventInput {
-    private final Identity identity;
+public abstract class AbstractService implements EventPropagator {
+    private final Entity entity;
     private final ServiceModel model;
 
     public AbstractService(String name, ServiceModel methods){
-        identity = new Identity(name);
+        entity = new Entity(name);
         this.model = methods;
     }
 
@@ -25,42 +27,48 @@ public abstract class AbstractService implements EventPropagator, EventInput {
         return returnableObject;
     }
 
-    public Identity getIdentity() {
-        return identity;
+    public Entity getEntity() {
+        return entity;
     }
 
-    @Override
-    public void onCreate() {
-
-    }
-
-    @Override
-    public void onDestroy() {
+    //region events
+    protected void onCreate() {
 
     }
 
-    @Override
-    public void onStart() {
+    protected void onDestroy() {
 
     }
 
-    @Override
-    public void onStop() {
+    protected void onStart() {
 
     }
 
-    @Override
-    public void onPause() {
+    protected void onStop() {
 
     }
 
-    @Override
-    public void onResume() {
+    protected void onPause() {
 
     }
 
-    @Override
-    public void onRestart() {
+    protected void onResume() {
 
+    }
+
+    protected void onRestart() {
+
+    }
+    //endregion
+
+    public AbstractService searchServiceRoot(String name){
+        return MainManager.
+                getInstance().
+                getManager().
+                getService(name);
+    }
+
+    public ServiceModel getModel() {
+        return model;
     }
 }

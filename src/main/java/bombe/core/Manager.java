@@ -31,9 +31,9 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      */
     @Override
     public void addService(AbstractService service) throws KeyAlreadyExistsException {
-        if (serviceMap.containsKey(service.getIdentity().getName()))
+        if (serviceMap.containsKey(service.getEntity().getName()))
             throw new KeyAlreadyExistsException("Service Name Already Exists");
-        serviceMap.put(service.getIdentity().getName(), service);
+        serviceMap.put(service.getEntity().getName(), service);
     }
     /**
      * Elimina un servizio all'interno della tabella servizi del manager
@@ -42,9 +42,9 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      */
     @Override
     public void deleteService(AbstractService service) throws NoSuchElementException {
-        if (!serviceMap.containsKey(service.getIdentity().getName()))
+        if (!serviceMap.containsKey(service.getEntity().getName()))
             throw new NoSuchElementException();
-        serviceMap.remove(service.getIdentity().getName());
+        serviceMap.remove(service.getEntity().getName());
     }
 
     /**

@@ -12,16 +12,3 @@ public class Redirect extends Service {
     }
 }
 
-class RedirectModel implements ServiceModel{
-    private static RedirectModel redirectMethod = null;
-
-    ReturnableObject<?> exchange(EventObject eventObject) throws Exception{
-        return MainManager.getInstance().getNodeProvider().getNode().call((EventObject) eventObject.getParams()[0]);
-    }
-
-    public static RedirectModel getInstance(){
-        if (redirectMethod == null)
-            redirectMethod = new RedirectModel();
-        return redirectMethod;
-    }
-}

@@ -14,7 +14,7 @@ public final class EventObject implements Serializable {
     private final Class<?>[] types;
     private boolean hasNext = true;
     public static final Pattern EVENT_PATTERN =
-            Pattern.compile("^(?<whole>(?<first>[a-z0-9]+)(?:(?:\\.[a-z0-9]+)+)?\\:)(?<method>[a-z](?:[a-z0-9]+)?)$", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("^(?<whole>(?<first>[a-z0-9]+)(?:(?:\\.[a-z0-9]+)+)?\\:)?(?<method>[a-z](?:[a-z0-9]+)?)$", Pattern.CASE_INSENSITIVE);
     public final static String WHOLE = "whole", FIRST = "first", METHOD = "method";
 
 
@@ -28,6 +28,7 @@ public final class EventObject implements Serializable {
         this.method = matcher.group(METHOD);
         this.params = params;
         this.types = calcTypes(params);
+        this.hasNext = matcher.group(WHOLE) != null;
     }
 
     public static Class<?>[] calcTypes(Object... params){

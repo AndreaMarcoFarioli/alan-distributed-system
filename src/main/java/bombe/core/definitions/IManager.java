@@ -2,6 +2,8 @@ package bombe.core.definitions;
 
 
 
+import bombe.core.AbstractService;
+
 import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.NoSuchElementException;
 

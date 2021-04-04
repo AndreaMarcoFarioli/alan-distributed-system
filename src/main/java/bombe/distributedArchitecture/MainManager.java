@@ -39,6 +39,10 @@ public final class MainManager extends UnicastRemoteObject implements RemoteNode
         return nodeProvider;
     }
 
+    public ReturnableObject<?> sendOver(EventObject eventObject) throws Exception{
+        return nodeProvider.getNode().call(nodeProvider.middleware(eventObject));
+    }
+
     @Override
     public Manager getManager() {
         return manager;

@@ -1,11 +1,11 @@
 package bombe.core;
 
-public class Identity {
+public class Entity {
     private final String name;
     private final int id;
     private static int staticId;
 
-    public Identity(String name){
+    public Entity(String name){
         id = staticId++;
         this.name = name;
     }
@@ -16,5 +16,13 @@ public class Identity {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Entity{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
