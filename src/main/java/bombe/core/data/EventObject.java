@@ -12,10 +12,11 @@ public final class EventObject implements Serializable {
     private final String method;
     private final Object[] params;
     private final Class<?>[] types;
+    private final String fork;
     private boolean hasNext = true;
     public static final Pattern EVENT_PATTERN =
-            Pattern.compile("^(?<whole>(?<first>[a-z0-9]+)(?:(?:\\.[a-z0-9]+)+)?\\:)?(?<method>[a-z](?:[a-z0-9]+)?)$", Pattern.CASE_INSENSITIVE);
-    public final static String WHOLE = "whole", FIRST = "first", METHOD = "method";
+            Pattern.compile("^(?:(?<fork>[a-z0-9_\\-]+)#)?(?<whole>(?<first>[a-z0-9]+)(?:(?:\\.[a-z0-9]+)+)?\\:)?(?<method>[a-z](?:[a-z0-9]+)?)$", Pattern.CASE_INSENSITIVE);
+    public final static String WHOLE = "whole", FIRST = "first", METHOD = "method", FORK = "fork";
 
 
     public EventObject(String coordinate, Object... params) throws MalformedEventException {
@@ -24,11 +25,16 @@ public final class EventObject implements Serializable {
         if (!matcher.matches())
             throw new MalformedEventException();
 
-        this.coordinate = coordinate;
+        this.fork = matcher.group(FORK);
+        this.coordinate = coordinate.substring(this.fork == null?0:this.fork.length()+1);
         this.method = matcher.group(METHOD);
         this.params = params;
         this.types = calcTypes(params);
         this.hasNext = matcher.group(WHOLE) != null;
+    }
+
+    public String getFork() {
+        return fork;
     }
 
     public static Class<?>[] calcTypes(Object... params){
@@ -76,6 +82,7 @@ public final class EventObject implements Serializable {
     public String toString() {
         return "EventObject{" +
                 "coordinate='" + coordinate + '\'' +
+                ", fork ='" + fork + '\'' +
                 ", method='" + method + '\'' +
                 ", params=" + Arrays.toString(params) +
                 ", types=" + Arrays.toString(types) +

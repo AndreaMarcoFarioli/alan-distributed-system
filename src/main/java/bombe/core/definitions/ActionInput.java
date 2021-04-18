@@ -8,18 +8,18 @@ import bombe.core.AbstractService;
  * Descrive ogni genere di azione che un Manager puo' inoltrare ad un servizio
  */
 public interface ActionInput {
-    void create();
-    void destroy();
-    void start();
-    void stop();
-    void restart();
-    void pause();
-    void resume();
-    void startService(AbstractService abstractService);
-    void stopService(AbstractService abstractService);
-    void destroyService(AbstractService abstractService);
-    void createService(AbstractService abstractService);
-    void restartService(AbstractService abstractService);
-    void pauseService(AbstractService abstractService);
-    void resumeService(AbstractService abstractService);
+    void create() throws Exception;
+    void destroy() throws Exception;
+    void start() throws Exception;
+    void stop() throws Exception;
+    void restart() throws Exception;
+    void pause() throws Exception;
+    void resume() throws Exception;
+    void startService(AbstractService abstractService) throws Exception;
+    void stopService(AbstractService abstractService) throws Exception;
+    void destroyService(AbstractService abstractService) throws Exception;
+    void createService(AbstractService abstractService) throws Exception;
+    void restartService(AbstractService abstractService) throws Exception;
+    void pauseService(AbstractService abstractService) throws Exception;
+    void resumeService(AbstractService abstractService) throws Exception;
 }

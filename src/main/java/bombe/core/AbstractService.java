@@ -32,31 +32,31 @@ public abstract class AbstractService implements EventPropagator {
     }
 
     //region events
-    protected void onCreate() {
+    protected void onCreate() throws Exception {
 
     }
 
-    protected void onDestroy() {
+    protected void onDestroy() throws Exception {
 
     }
 
-    protected void onStart() {
+    protected void onStart() throws Exception {
 
     }
 
-    protected void onStop() {
+    protected void onStop() throws Exception {
 
     }
 
-    protected void onPause() {
+    protected void onPause() throws Exception {
 
     }
 
-    protected void onResume() {
+    protected void onResume() throws Exception {
 
     }
 
-    protected void onRestart() {
+    protected void onRestart() throws Exception {
 
     }
     //endregion

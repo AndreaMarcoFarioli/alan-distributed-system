@@ -1,5 +1,6 @@
 package bombe.distributedArchitecture;
 
+import bombe.core.data.ClusterEnvironment;
 import bombe.core.data.EventObject;
 import bombe.core.Manager;
 import bombe.core.data.ReturnableObject;
@@ -10,6 +11,7 @@ public final class MainManager extends UnicastRemoteObject implements RemoteNode
     private final Manager manager = new Manager();
     private NodeProvider nodeProvider;
     private static MainManager instance = null;
+
     private MainManager() throws RemoteException {
     }
 
@@ -33,10 +35,6 @@ public final class MainManager extends UnicastRemoteObject implements RemoteNode
 
     public void setNodeProvider(NodeProvider nodeProvider) {
         this.nodeProvider = nodeProvider;
-    }
-
-    public NodeProvider getNodeProvider() {
-        return nodeProvider;
     }
 
     public ReturnableObject<?> sendOver(EventObject eventObject) throws Exception{

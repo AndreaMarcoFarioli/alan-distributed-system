@@ -33,37 +33,37 @@ public abstract class ExtendableService extends AbstractService implements HasMa
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate() throws Exception {
         manager.create();
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy()throws Exception {
         manager.destroy();
     }
 
     @Override
-    public void onStart() {
+    public void onStart()throws Exception {
         manager.start();
     }
 
     @Override
-    public void onStop() {
+    public void onStop()throws Exception {
         manager.stop();
     }
 
     @Override
-    public void onPause() {
+    public void onPause()throws Exception {
         manager.pause();
     }
 
     @Override
-    public void onResume() {
+    public void onResume()throws Exception {
         manager.resume();
     }
 
     @Override
-    public void onRestart() {
+    public void onRestart()throws Exception {
         manager.restart();
     }
 }

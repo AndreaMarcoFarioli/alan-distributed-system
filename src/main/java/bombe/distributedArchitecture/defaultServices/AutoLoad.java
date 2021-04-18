@@ -9,7 +9,7 @@ public class AutoLoad extends Service {
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate() throws Exception {
         super.onCreate();
         MainManager.getInstance().getManager().create();
     }

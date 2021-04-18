@@ -1,9 +1,8 @@
-package bombe.distributedArchitecture.defaultServices;
+package bombe.distributedArchitecture.defaultServices.master;
 
 import bombe.core.data.EventObject;
 import bombe.core.data.ReturnableObject;
 import bombe.core.definitions.ServiceModel;
-import bombe.distributedArchitecture.MainManager;
 
 public class RedirectModel implements ServiceModel {
     private static RedirectModel redirectMethod = null;

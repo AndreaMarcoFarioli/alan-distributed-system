@@ -144,8 +144,12 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      * @param abstractService servizio soggetto
      */
     @Override
-    public void startService(AbstractService abstractService) {
-        abstractService.onStart();
+    public void startService(AbstractService abstractService)  {
+        try {
+            abstractService.onStart();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -154,7 +158,11 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      */
     @Override
     public void stopService(AbstractService abstractService) {
-        abstractService.onStop();
+        try {
+            abstractService.onStop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -163,7 +171,11 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      */
     @Override
     public void destroyService(AbstractService abstractService) {
-        abstractService.onDestroy();
+        try {
+            abstractService.onDestroy();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -172,7 +184,11 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      */
     @Override
     public void createService(AbstractService abstractService) {
-        abstractService.onCreate();
+        try {
+            abstractService.onCreate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -181,7 +197,11 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      */
     @Override
     public void restartService(AbstractService abstractService) {
-        abstractService.onRestart();
+        try {
+            abstractService.onRestart();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -190,7 +210,11 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      */
     @Override
     public void pauseService(AbstractService abstractService) {
-        abstractService.onPause();
+        try {
+            abstractService.onPause();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -199,7 +223,11 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      */
     @Override
     public void resumeService(AbstractService abstractService) {
-        abstractService.onResume();
+        try {
+            abstractService.onResume();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     //endregion
 

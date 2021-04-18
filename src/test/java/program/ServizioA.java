@@ -10,11 +10,11 @@ public class ServizioA extends ExtendableService {
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate() throws Exception {
         super.onCreate();
         long t1 = System.currentTimeMillis();
         try {
-            System.out.println(MainManager.getInstance().sendOver(new EventObject("ciccio:l", 1,2)));
+            System.out.println(MainManager.getInstance().sendOver(new EventObject("master#serviziob:metodoA")));
         } catch (Exception e) {
             e.printStackTrace();
         }
