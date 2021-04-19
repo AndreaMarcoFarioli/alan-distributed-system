@@ -1,12 +1,13 @@
 package program;
 
 import bombe.core.ExtendableService;
+import bombe.core.Manager;
 import bombe.core.data.EventObject;
 import bombe.distributedArchitecture.MainManager;
 
 public class ServizioA extends ExtendableService {
-    public ServizioA() {
-        super("servizioa", new Model());
+    public ServizioA(Manager parentManager) {
+        super("servizioa", new Model(), parentManager);
     }
 
     @Override

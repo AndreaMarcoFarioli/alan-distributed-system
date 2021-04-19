@@ -1,14 +1,13 @@
 package bombe.core.definitions;
 
 
-
 import bombe.core.AbstractService;
-
-import javax.management.openmbean.KeyAlreadyExistsException;
-import java.util.NoSuchElementException;
+import bombe.core.ExtendableService;
+import bombe.core.Service;
 
 public interface IManager {
-    void addService(AbstractService service) throws KeyAlreadyExistsException;
-    void deleteService(AbstractService service) throws NoSuchElementException;
-    AbstractService getService(String name) throws NoSuchElementException;
+    AbstractService addService(Class<? extends AbstractService> service);
+    void deleteService(AbstractService service);
+    void deleteServiceByName(String name);
+    AbstractService getService(String name);
 }

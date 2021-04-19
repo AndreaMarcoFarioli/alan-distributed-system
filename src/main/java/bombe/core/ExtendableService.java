@@ -8,8 +8,8 @@ import bombe.distributedArchitecture.HasManager;
 public abstract class ExtendableService extends AbstractService implements HasManager {
     private final Manager manager = new Manager();
 
-    public ExtendableService(String name, ServiceModel methods) {
-        super(name, methods);
+    public ExtendableService(String name, ServiceModel methods, Manager parentManager) {
+        super(name, methods, parentManager);
     }
 
     @Override

@@ -10,10 +10,12 @@ import bombe.exceptions.PropagationException;
 public abstract class AbstractService implements EventPropagator {
     private final Entity entity;
     private final ServiceModel model;
+    private final Manager parentManager;
 
-    public AbstractService(String name, ServiceModel methods){
+    public AbstractService(String name, ServiceModel methods, Manager parentManager){
         entity = new Entity(name);
         this.model = methods;
+        this.parentManager = parentManager;
     }
 
     protected final ReturnableObject<?> propagateInside(EventObject eventObject) throws Exception {

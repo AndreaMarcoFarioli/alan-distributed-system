@@ -5,8 +5,8 @@ import bombe.core.data.ReturnableObject;
 import bombe.core.definitions.ServiceModel;
 
 public abstract class Service extends AbstractService {
-    public Service(String name, ServiceModel methods){
-        super(name, methods);
+    public Service(String name, ServiceModel methods, Manager parentManager){
+        super(name, methods, parentManager);
     }
     //region events
 

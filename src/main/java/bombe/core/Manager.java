@@ -6,6 +6,7 @@ import bombe.core.definitions.*;
 import bombe.exceptions.PropagationException;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -24,16 +25,20 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
     private final Map<String, AbstractService> serviceMap = new HashMap<>();
 
     //region IManager and EventPropagator
-    /**
-     * Aggiunge un servizio all'interno della tabella servizi del manager
-     * @param service Servizio che si intende aggiungere
-     * @throws KeyAlreadyExistsException Il nome logico assegnato al servizio e' gia' esistente all'interno del manager
-     */
+
     @Override
-    public void addService(AbstractService service) throws KeyAlreadyExistsException {
-        if (serviceMap.containsKey(service.getEntity().getName()))
-            throw new KeyAlreadyExistsException("Service Name Already Exists");
-        serviceMap.put(service.getEntity().getName(), service);
+    public AbstractService addService(Class<? extends AbstractService> serviceClass) {
+        //TODO capire se usare metodo reflection per passare il manager, oppure lasciare questo
+        AbstractService abstractService = null;
+        try {
+            abstractService = serviceClass
+                    .getConstructor(new Class[]{Manager.class})
+                    .newInstance(this);
+            serviceMap.put(abstractService.getEntity().getName(), abstractService);
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return abstractService;
     }
     /**
      * Elimina un servizio all'interno della tabella servizi del manager
@@ -41,10 +46,15 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      * @throws NoSuchElementException L'elemento che si intende eliminare non esiste all'interno del manager
      */
     @Override
-    public void deleteService(AbstractService service) throws NoSuchElementException {
-        if (!serviceMap.containsKey(service.getEntity().getName()))
+    public void deleteService(AbstractService service) {
+        deleteServiceByName(service.getEntity().getName());
+    }
+
+    @Override
+    public void deleteServiceByName(String name) {
+        if (!serviceMap.containsKey(name))
             throw new NoSuchElementException();
-        serviceMap.remove(service.getEntity().getName());
+        serviceMap.remove(name);
     }
 
     /**
@@ -54,9 +64,9 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
      * @throws NoSuchElementException Non e' stato trovato alcuno servizio all'interno della tabella dei servizi del manager
      */
     @Override
-    public AbstractService getService(String name) throws NoSuchElementException {
-        if (!serviceMap.containsKey(name))
-            throw new NoSuchElementException();
+    public AbstractService getService(String name) {
+        /*if (!serviceMap.containsKey(name))
+            throw new NoSuchElementException();*/
         return serviceMap.get(name);
     }
 

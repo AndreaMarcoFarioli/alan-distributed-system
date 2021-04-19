@@ -8,14 +8,8 @@ public class ClusterEnvironment extends Env {
     private static ClusterEnvironment clusterEnvironment;
     private final Map<String, Object> variables = new HashMap<>();
 
-    private ClusterEnvironment(){
+    public ClusterEnvironment(){
         super();
-    }
-
-    public static ClusterEnvironment getInstance(){
-        if (clusterEnvironment == null)
-            clusterEnvironment = new ClusterEnvironment();
-        return clusterEnvironment;
     }
 
     @Override
