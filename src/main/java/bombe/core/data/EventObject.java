@@ -1,9 +1,10 @@
 package bombe.core.data;
 
-import bombe.exceptions.MalformedEventException;
+import bombe.exceptions.*;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,7 +20,7 @@ public final class EventObject implements Serializable {
     public final static String WHOLE = "whole", FIRST = "first", METHOD = "method", FORK = "fork";
 
 
-    public EventObject(String coordinate, Object... params) throws MalformedEventException {
+    public EventObject(String coordinate, Object... params) {
         Matcher matcher = EVENT_PATTERN.matcher(coordinate);
 
         if (!matcher.matches())

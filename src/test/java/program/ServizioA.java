@@ -14,7 +14,9 @@ public class ServizioA extends ExtendableService {
         super.onCreate();
         long t1 = System.currentTimeMillis();
         try {
-            System.out.println(MainManager.getInstance().sendOver(new EventObject("master#serviziob:metodoA")));
+            System.out.println(
+                    MainManager.getInstance().sendOver(new EventObject("master#serviziob:metodoA"))
+            );
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -3,7 +3,7 @@ package bombe.distributedArchitecture;
 import bombe.core.data.ClusterEnvironment;
 import bombe.core.data.EventObject;
 import bombe.core.Manager;
-import bombe.core.data.ReturnableObject;
+import bombe.core.data.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
