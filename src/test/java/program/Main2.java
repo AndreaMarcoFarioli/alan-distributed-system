@@ -1,13 +1,7 @@
 package program;
 
-import bombe.core.data.ClusterEnvironment;
-import bombe.core.data.EventObject;
-import bombe.core.data.ReturnableObject;
-import bombe.distributedArchitecture.MainManager;
-import bombe.distributedArchitecture.RemoteNode;
-
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import bombe2.core.data.ClusterEnvironment;
+import bombe2.distributedArchitecture.MainManager;
 
 public class Main2 {
     public static void main(String[] args) throws Exception {

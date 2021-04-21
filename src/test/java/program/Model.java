@@ -1,7 +1,7 @@
 package program;
 
-import bombe.core.data.ReturnableObject;
-import bombe.core.definitions.ServiceModel;
+import bombe2.core.data.ReturnableObject;
+import bombe2.core.definitions.ServiceModel;
 
 public class Model implements ServiceModel {
     public ReturnableObject<Integer> metodoA(){

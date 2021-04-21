@@ -1,8 +1,8 @@
 package program;
 
-import bombe.core.ExtendableService;
-import bombe.core.data.EventObject;
-import bombe.distributedArchitecture.MainManager;
+import bombe2.core.ExtendableService;
+import bombe2.core.data.EventObject;
+import bombe2.distributedArchitecture.MainManager;
 
 public class ServizioA extends ExtendableService {
     public ServizioA() {
@@ -20,7 +20,6 @@ public class ServizioA extends ExtendableService {
         }
 
         long t2 = System.currentTimeMillis();
-
         System.out.println(t2-t1 + "ms");
     }
 }
