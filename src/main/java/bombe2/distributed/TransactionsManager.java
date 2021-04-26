@@ -1,4 +1,4 @@
-package bombe2.distributedArchitecture;
+package bombe2.distributed;
 
 public interface TransactionsManager {
     void beforeInvocation(Object param);

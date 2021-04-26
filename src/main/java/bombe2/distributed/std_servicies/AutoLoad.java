@@ -1,7 +1,7 @@
-package bombe2.distributedArchitecture.defaultServices;
+package bombe2.distributed.std_servicies;
 
 import bombe2.core.Service;
-import bombe2.distributedArchitecture.MainManager;
+import bombe2.distributed.MainManager;
 
 public class AutoLoad extends Service {
     public AutoLoad() {

@@ -6,6 +6,7 @@ import bombe2.core.ExtendableService;
 public class ServizioA extends ExtendableService {
     public ServizioA() {
         super("servizioa", new Model());
+        getManager().addService(new ServizioB());
     }
 
     @Override

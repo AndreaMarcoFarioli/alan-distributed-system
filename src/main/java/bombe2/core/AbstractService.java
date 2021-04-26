@@ -4,7 +4,7 @@ import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.core.definitions.Propagator;
 import bombe2.core.definitions.ServiceModel;
-import bombe2.distributedArchitecture.MainManager;
+import bombe2.distributed.MainManager;
 import bombe2.exceptions.PropagationException;
 
 public abstract class AbstractService implements Propagator {

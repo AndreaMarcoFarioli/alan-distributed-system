@@ -1,4 +1,4 @@
-package bombe2.distributedArchitecture.defaultServices;
+package bombe2.distributed.std_servicies;
 
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;

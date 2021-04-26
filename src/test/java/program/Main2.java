@@ -1,7 +1,7 @@
 package program;
 
 import bombe2.core.data.ClusterEnvironment;
-import bombe2.distributedArchitecture.MainManager;
+import bombe2.distributed.MainManager;
 
 public class Main2 {
     public static void main(String[] args) throws Exception {

@@ -1,4 +1,4 @@
-package bombe2.distributedArchitecture;
+package bombe2.distributed;
 
 import bombe2.core.Manager;
 

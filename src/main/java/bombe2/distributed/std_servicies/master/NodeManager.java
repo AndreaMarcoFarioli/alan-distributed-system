@@ -1,9 +1,9 @@
-package bombe2.distributedArchitecture.defaultServices.master;
+package bombe2.distributed.std_servicies.master;
 
 import bombe2.core.Service;
 import bombe2.core.data.EventObject;
-import bombe2.distributedArchitecture.NodeProvider;
-import bombe2.distributedArchitecture.RemoteNode;
+import bombe2.distributed.NodeProvider;
+import bombe2.distributed.RemoteNode;
 
 import java.rmi.RemoteException;
 

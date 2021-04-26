@@ -3,7 +3,7 @@ package bombe2.core;
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.core.definitions.ServiceModel;
-import bombe2.distributedArchitecture.HasManager;
+import bombe2.distributed.HasManager;
 
 public abstract class ExtendableService extends AbstractService implements HasManager {
     private final Manager manager = new Manager(this);
