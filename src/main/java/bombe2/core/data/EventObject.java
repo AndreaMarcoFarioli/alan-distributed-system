@@ -1,5 +1,6 @@
 package bombe2.core.data;
 
+import bombe2.annotations.Origin;
 import bombe2.exceptions.MalformedEventException;
 
 import java.io.Serializable;
@@ -14,6 +15,8 @@ public final class EventObject implements Serializable {
     private final Class<?>[] types;
     private final String fork;
     private boolean hasNext, isBottomUp;
+    private Origin origin = Origin.LOCAL;
+
     public static final String EVENT_PATTERN =
             "^(?:(?:(?<fork>[a-z0-9_\\-]+)#)?(?<whole>(?<first>(?:[a-z0-9]+|\\^))(\\.(?<second>(?:[a-z0-9]+|\\^)))?(?:(?:\\.(?:[a-z0-9]+|\\^))+)?:))?(?<method>[a-z](?:[a-z0-9]+)?)$";
     public static final Pattern COMPILED_PATTERN =
@@ -49,6 +52,10 @@ public final class EventObject implements Serializable {
 
     public Object[] getParams() {
         return params;
+    }
+
+    public Origin getOrigin() {
+        return origin;
     }
 
     public Class<?>[] getTypes() {
@@ -97,6 +104,7 @@ public final class EventObject implements Serializable {
                 ", types=" + Arrays.toString(types) +
                 ", hasNext=" + hasNext +
                 ", isBottomUp="+isBottomUp+
+                ", origin="+origin+
                 '}';
     }
 }

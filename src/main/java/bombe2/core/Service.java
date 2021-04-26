@@ -8,10 +8,6 @@ public abstract class Service extends AbstractService {
     public Service(String name, ServiceModel methods){
         super(name, methods);
     }
-    //region events
-
-
-    //endregion
     @Override
     public final ReturnableObject<?> propagate(EventObject eventObject) throws Exception {
         ReturnableObject<?> returnableObject;

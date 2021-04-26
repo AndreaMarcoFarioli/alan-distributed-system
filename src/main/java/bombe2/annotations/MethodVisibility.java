@@ -7,5 +7,5 @@ import java.lang.annotation.*;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MethodVisibility {
-    VisibilityType visibilityType() default VisibilityType.LOCAL;
+    VisibilityType visibility() default VisibilityType.LOCAL;
 }
