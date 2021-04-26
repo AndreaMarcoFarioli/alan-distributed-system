@@ -6,7 +6,7 @@ import bombe2.core.definitions.ServiceModel;
 import bombe2.distributedArchitecture.HasManager;
 
 public abstract class ExtendableService extends AbstractService implements HasManager {
-    private final Manager manager = new Manager();
+    private final Manager manager = new Manager(this);
 
     public ExtendableService(String name, ServiceModel methods) {
         super(name, methods);
@@ -20,10 +20,15 @@ public abstract class ExtendableService extends AbstractService implements HasMa
     @Override
     public final ReturnableObject<?> propagate(EventObject eventObject) throws Exception {
         ReturnableObject<?> returnableObject;
-        if (eventObject.hasNext())
-            returnableObject = manager.propagate(eventObject);
+        if (eventObject.hasNext()) {
+            if (eventObject.isBottomUp()) {
+                eventObject.getNext();
+                returnableObject = getPropagator().propagate(eventObject);//bottomUp
+            } else
+                returnableObject = manager.propagate(eventObject);//topDown
+        }
         else
-            returnableObject = propagateInside(eventObject);
+            returnableObject = propagateInside(eventObject);//invocation
         return returnableObject;
     }
 
@@ -33,37 +38,36 @@ public abstract class ExtendableService extends AbstractService implements HasMa
     }
 
     @Override
-    public void onCreate() throws Exception {
+    protected void onCreate() throws Exception {
         manager.create();
     }
 
     @Override
-    public void onDestroy()throws Exception {
+    protected void onDestroy()throws Exception {
         manager.destroy();
     }
 
     @Override
-    public void onStart()throws Exception {
+    protected void onStart()throws Exception {
         manager.start();
     }
 
     @Override
-    public void onStop()throws Exception {
+    protected void onStop()throws Exception {
         manager.stop();
     }
 
     @Override
-    public void onPause()throws Exception {
+    protected void onPause()throws Exception {
         manager.pause();
     }
 
     @Override
-    public void onResume()throws Exception {
+    protected void onResume()throws Exception {
         manager.resume();
     }
 
-    @Override
-    public void onRestart()throws Exception {
+    protected void onRestart()throws Exception {
         manager.restart();
     }
 }

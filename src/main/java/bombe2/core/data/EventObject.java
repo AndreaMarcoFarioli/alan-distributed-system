@@ -13,12 +13,12 @@ public final class EventObject implements Serializable {
     private final Object[] params;
     private final Class<?>[] types;
     private final String fork;
-    private boolean hasNext;
+    private boolean hasNext, isBottomUp;
     public static final String EVENT_PATTERN =
-            "^((?:(?<fork>[a-z0-9_\\-]+)#)?(?<whole>(?<first>(?:[a-z0-9]+|\\^))(?:(?:\\.(?:[a-z0-9]+|\\^))+)?:))?(?<method>[a-z](?:[a-z0-9]+)?)$";
+            "^(?:(?:(?<fork>[a-z0-9_\\-]+)#)?(?<whole>(?<first>(?:[a-z0-9]+|\\^))(\\.(?<second>(?:[a-z0-9]+|\\^)))?(?:(?:\\.(?:[a-z0-9]+|\\^))+)?:))?(?<method>[a-z](?:[a-z0-9]+)?)$";
     public static final Pattern COMPILED_PATTERN =
             Pattern.compile(EVENT_PATTERN, Pattern.CASE_INSENSITIVE);
-    public final static String WHOLE = "whole", FIRST = "first", METHOD = "method", FORK = "fork";
+    public final static String WHOLE = "whole", FIRST = "first", METHOD = "method", FORK = "fork", SECOND = "second";
 
 
     public EventObject(String coordinate, Object... params) throws MalformedEventException {
@@ -33,6 +33,7 @@ public final class EventObject implements Serializable {
         this.params = params;
         this.types = calcTypes(params);
         this.hasNext = matcher.group(WHOLE) != null;
+        this.isBottomUp = matcher.group(FIRST).equals("^");
     }
 
     public String getFork() {
@@ -64,6 +65,8 @@ public final class EventObject implements Serializable {
         matcher.matches();
         String result = matcher.group(FIRST);
         hasNext = !matcher.group(WHOLE).equals(result + ":");
+        if (isBottomUp = !(result+":").equals(matcher.group(WHOLE)))
+            isBottomUp = matcher.group(SECOND).equals("^");
         coordinate = coordinate.substring(result.length() + 1);
         return result;
     }
@@ -80,6 +83,10 @@ public final class EventObject implements Serializable {
         return coordinate;
     }
 
+    public boolean isBottomUp() {
+        return isBottomUp;
+    }
+
     @Override
     public String toString() {
         return "EventObject{" +
@@ -89,6 +96,7 @@ public final class EventObject implements Serializable {
                 ", params=" + Arrays.toString(params) +
                 ", types=" + Arrays.toString(types) +
                 ", hasNext=" + hasNext +
+                ", isBottomUp="+isBottomUp+
                 '}';
     }
 }

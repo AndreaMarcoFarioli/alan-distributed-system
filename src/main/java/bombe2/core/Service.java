@@ -14,7 +14,13 @@ public abstract class Service extends AbstractService {
     //endregion
     @Override
     public final ReturnableObject<?> propagate(EventObject eventObject) throws Exception {
-        return propagateInside(eventObject);
+        ReturnableObject<?> returnableObject;
+        if (eventObject.hasNext() && eventObject.isBottomUp()) {
+            eventObject.getNext();
+            returnableObject = getPropagator().propagate(eventObject);
+        }else
+            returnableObject = propagateInside(eventObject);
+        return returnableObject;
     }
 
 }

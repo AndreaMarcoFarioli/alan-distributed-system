@@ -3,16 +3,13 @@ package bombe2.core;
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.core.definitions.*;
-import bombe2.exceptions.MalformedEventException;
 import bombe2.exceptions.PropagationException;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.function.Consumer;
 
 /**
  * @author Andrea Marco Farioli
@@ -23,8 +20,16 @@ import java.util.function.Consumer;
     TODO gestione degli eventi
  */
 
-public final class Manager implements IManager, EventPropagator, ActionInput {
+public final class Manager implements IManager, Propagator, ActionInput {
     private final Map<String, AbstractService> serviceMap = new HashMap<>();
+    private final ExtendableService extendableService;
+    public Manager(ExtendableService parentService){
+        this.extendableService = parentService;
+    }
+
+    public Manager(){
+        this(null);
+    }
 
     //region IManager and EventPropagator
     /**
@@ -44,7 +49,7 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
 
     private void setManagerReflection(AbstractService abstractService) throws NoSuchFieldException, IllegalAccessException {
         Class<?> s = AbstractService.class;
-        Field eventPropagator = s.getDeclaredField("eventPropagator");
+        Field eventPropagator = s.getDeclaredField("propagator");
         eventPropagator.setAccessible(true);
         eventPropagator.set(abstractService, this);
         eventPropagator.setAccessible(false);
@@ -84,7 +89,14 @@ public final class Manager implements IManager, EventPropagator, ActionInput {
     public ReturnableObject<?> propagate(EventObject eventObject) throws Exception {
         if (!eventObject.hasNext())
             throw new PropagationException();
-        return serviceMap.get(eventObject.getNext()).propagate(eventObject);
+        ReturnableObject<?> returnableObject;
+
+        if (eventObject.isBottomUp()) {
+            returnableObject = extendableService.propagate(eventObject);
+        }
+        else
+            returnableObject = serviceMap.get(eventObject.getNext()).propagate(eventObject);
+        return returnableObject;
     }
     //endregion
 

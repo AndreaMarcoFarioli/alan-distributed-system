@@ -2,15 +2,15 @@ package bombe2.core;
 
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
-import bombe2.core.definitions.EventPropagator;
+import bombe2.core.definitions.Propagator;
 import bombe2.core.definitions.ServiceModel;
 import bombe2.distributedArchitecture.MainManager;
 import bombe2.exceptions.PropagationException;
 
-public abstract class AbstractService implements EventPropagator {
+public abstract class AbstractService implements Propagator {
     private final Entity entity;
     private final ServiceModel model;
-    private EventPropagator eventPropagator;
+    private Propagator propagator;
 
     public AbstractService(String name, ServiceModel methods){
         entity = new Entity(name);
@@ -28,8 +28,8 @@ public abstract class AbstractService implements EventPropagator {
         return returnableObject;
     }
 
-    public EventPropagator getEventPropagator() {
-        return eventPropagator;
+    public Propagator getPropagator() {
+        return propagator;
     }
 
     public Entity getEntity() {
@@ -82,7 +82,7 @@ public abstract class AbstractService implements EventPropagator {
         return "AbstractService{" +
                 "entity=" + entity +
                 ", model=" + model +
-                ", eventPropagator=" + eventPropagator +
+                ", eventPropagator=" + propagator +
                 '}';
     }
 }
