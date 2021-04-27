@@ -1,30 +1,49 @@
 package bombe2.core;
 
+import bombe2.annotations.MethodVisibility;
+import bombe2.annotations.Origin;
+import bombe2.annotations.VisibilityType;
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.core.definitions.Propagator;
-import bombe2.core.definitions.ServiceModel;
 import bombe2.distributed.MainManager;
 import bombe2.exceptions.PropagationException;
 
+import java.lang.reflect.Method;
+
 public abstract class AbstractService implements Propagator {
     private final Entity entity;
-    private final ServiceModel model;
     private Propagator propagator;
 
-    public AbstractService(String name, ServiceModel methods){
+    public AbstractService(String name){
         entity = new Entity(name);
-        this.model = methods;
     }
 
     protected final ReturnableObject<?> propagateInside(EventObject eventObject) throws Exception {
         if (eventObject.hasNext())
-            throw new PropagationException("end services can't route = " + eventObject.getCoordinate());
+            throw new PropagationException(
+                    "end services can't route = "+
+                            eventObject.getCoordinate()
+            );
+
         ReturnableObject<?> returnableObject;
-        returnableObject =
-                (ReturnableObject<?>) model.getClass()
-                        .getMethod(eventObject.getMethod(), eventObject.getTypes())
-                        .invoke(model, eventObject.getParams());
+
+        Method method =
+                 this.getClass()
+                        .getMethod(eventObject.getMethod(), eventObject.getTypes());
+
+        MethodVisibility methodVisibility;
+        if ((methodVisibility = method.getAnnotation(MethodVisibility.class)) == null)
+            throw new PropagationException("Method visibility not defined");
+        if (!EventObject.visibilityTest(eventObject.getOrigin(),methodVisibility.visibility()))
+            throw new PropagationException(
+                    "You can't invoke a method, with visibility type = "+
+                            methodVisibility.visibility()+
+                            ", from "+
+                            eventObject.getOrigin()
+            );
+
+        returnableObject = (ReturnableObject<?>) method.invoke(this, eventObject.getParams());
         return returnableObject;
     }
 
@@ -66,6 +85,7 @@ public abstract class AbstractService implements Propagator {
     }
     //endregion
 
+    @Deprecated
     public AbstractService searchServiceRoot(String name){
         return MainManager.
                 getInstance().
@@ -73,15 +93,10 @@ public abstract class AbstractService implements Propagator {
                 getService(name);
     }
 
-    public ServiceModel getModel() {
-        return model;
-    }
-
     @Override
     public String toString() {
         return "AbstractService{" +
                 "entity=" + entity +
-                ", model=" + model +
                 ", eventPropagator=" + propagator +
                 '}';
     }

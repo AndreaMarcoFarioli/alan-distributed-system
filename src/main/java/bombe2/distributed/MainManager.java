@@ -1,5 +1,6 @@
 package bombe2.distributed;
 
+import bombe2.alpha.ClusterTiming;
 import bombe2.annotations.Origin;
 import bombe2.core.data.EventObject;
 import bombe2.core.Manager;

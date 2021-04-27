@@ -1,4 +1,4 @@
-package bombe2.distributed;
+package bombe2.alpha;
 
 import bombe2.core.definitions.ExceptionFunc;
 

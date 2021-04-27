@@ -6,7 +6,7 @@ import bombe2.distributed.MainManager;
 
 public class ConnectToMaster extends Service {
     public ConnectToMaster() {
-        super("connect-to-master", null);
+        super("connect-to-master");
     }
 
     @Override

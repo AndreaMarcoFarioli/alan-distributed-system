@@ -1,6 +1,7 @@
 package bombe2.core.data;
 
 import bombe2.annotations.Origin;
+import bombe2.annotations.VisibilityType;
 import bombe2.exceptions.MalformedEventException;
 
 import java.io.Serializable;
@@ -92,6 +93,15 @@ public final class EventObject implements Serializable {
 
     public boolean isBottomUp() {
         return isBottomUp;
+    }
+
+    public static boolean visibilityTest(Origin origin, VisibilityType visibilityType){
+        boolean
+                L = (origin == Origin.LOCAL),
+                R = (origin == Origin.REMOTE),
+                r = (visibilityType == VisibilityType.GLOBAL),
+                l = (visibilityType == VisibilityType.LOCAL);
+        return (L && l) || r && (R || L);
     }
 
     @Override

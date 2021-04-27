@@ -5,7 +5,7 @@ import bombe2.distributed.MainManager;
 
 public class AutoLoad extends Service {
     public AutoLoad() {
-        super("autoload", null);
+        super("autoload");
     }
 
     @Override

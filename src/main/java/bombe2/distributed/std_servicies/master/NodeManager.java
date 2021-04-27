@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 public class NodeManager extends Service implements NodeProvider {
 
     private NodeManager() {
-        super("NodeManager", new NodeManagerModel());
+        super("NodeManager");
     }
 
     @Override

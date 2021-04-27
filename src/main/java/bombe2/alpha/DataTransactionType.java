@@ -1,4 +1,4 @@
-package bombe2.distributed;
+package bombe2.alpha;
 
 public enum DataTransactionType {
     EXECUTION, READ, WRITE
