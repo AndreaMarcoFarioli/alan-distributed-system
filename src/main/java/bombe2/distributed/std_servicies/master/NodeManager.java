@@ -7,30 +7,15 @@ import bombe2.distributed.RemoteNode;
 
 import java.rmi.RemoteException;
 
-public class NodeManager extends Service implements NodeProvider {
+public abstract class NodeManager extends Service implements NodeProvider {
 
     private NodeManager() {
         super("NodeManager");
     }
 
     @Override
-    public RemoteNode getNode() throws RemoteException {
-        return null;
-    }
-
+    public abstract RemoteNode getNode() throws RemoteException;
     @Override
-    public EventObject middleware(EventObject eventObject) {
-        return null;
-    }
-
-    @Override
-    public void beforeInvocation(Object param) {
-
-    }
-
-    @Override
-    public void afterInvocation(Object param) {
-
-    }
+    public abstract EventObject middleware(EventObject eventObject);
 
 }

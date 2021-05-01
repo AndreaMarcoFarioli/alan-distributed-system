@@ -4,6 +4,11 @@ import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.distributed.HasManager;
 
+/**
+ * @author Andrea Marco Farioli
+ * @version 0.1.0
+ *
+ */
 public abstract class ExtendableService extends AbstractService implements HasManager {
     private final Manager manager = new Manager(this);
 

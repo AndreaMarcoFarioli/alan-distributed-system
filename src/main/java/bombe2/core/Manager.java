@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 
 /**
  * @author Andrea Marco Farioli
- * @version 1
+ * @version 0.1.0
  */
 
 /*
@@ -53,6 +53,11 @@ public final class Manager implements IManager, Propagator, ActionInput {
         eventPropagator.setAccessible(true);
         eventPropagator.set(abstractService, this);
         eventPropagator.setAccessible(false);
+        Field f = AbstractService.class.getDeclaredField("path");
+        f.setAccessible(true);
+        f.set(abstractService, abstractService.calcPath());
+        f.setAccessible(false);
+        abstractService.onManagerAdded();
     }
 
     /**
@@ -234,5 +239,12 @@ public final class Manager implements IManager, Propagator, ActionInput {
     private <T,E extends Exception>void iterateAll(ExceptionConsumer<T,E> consumer) throws Exception {
         for (AbstractService abstractService: serviceMap.values())
             consumer.accept((T)abstractService);
+    }
+
+    public String forwardPathRequest(){
+        String path = "";
+        if (extendableService != null)
+            path = extendableService.calcPath();
+        return path;
     }
 }

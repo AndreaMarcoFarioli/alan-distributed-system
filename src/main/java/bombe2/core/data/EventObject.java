@@ -9,12 +9,21 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//TODO definire una struttura più elegante
+
+/**
+ * @author Andrea Marco Farioli
+ * @version 0.1.0
+ * Classe che identifica la struttura standard per la propagazione degli eventi
+ */
 public final class EventObject implements Serializable {
     private String coordinate;
+    private final String original;
     private final String method;
     private final Object[] params;
     private final Class<?>[] types;
     private final String fork;
+    private final StringBuilder actualPath = new StringBuilder();
     private boolean hasNext, isBottomUp;
     private Origin origin = Origin.LOCAL;
 
@@ -33,6 +42,7 @@ public final class EventObject implements Serializable {
 
         this.fork = matcher.group(FORK);
         this.coordinate = coordinate.substring(this.fork == null?0:this.fork.length()+1);
+        this.original = this.coordinate;
         this.method = matcher.group(METHOD);
         this.params = params;
         this.types = calcTypes(params);
@@ -76,6 +86,9 @@ public final class EventObject implements Serializable {
         if (isBottomUp = !(result+":").equals(matcher.group(WHOLE)))
             isBottomUp = matcher.group(SECOND).equals("^");
         coordinate = coordinate.substring(result.length() + 1);
+        if (!"".equals(actualPath.toString()))
+            actualPath.append(".");
+        actualPath.append(result);
         return result;
     }
 
@@ -99,9 +112,17 @@ public final class EventObject implements Serializable {
         boolean
                 L = (origin == Origin.LOCAL),
                 R = (origin == Origin.REMOTE),
-                r = (visibilityType == VisibilityType.GLOBAL),
-                l = (visibilityType == VisibilityType.LOCAL);
+                r = (visibilityType == VisibilityType.PUBLIC),
+                l = (visibilityType == VisibilityType.PROTECTED);
         return (L && l) || r && (R || L);
+    }
+
+    public String getActualPath() {
+        return actualPath.toString();
+    }
+
+    public String getOriginal() {
+        return original;
     }
 
     @Override
