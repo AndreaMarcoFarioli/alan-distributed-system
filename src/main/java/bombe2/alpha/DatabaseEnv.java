@@ -1,6 +1,5 @@
-package example;
+package bombe2.alpha;
 
-import bombe2.alpha.DataTransactionType;
 import bombe2.distributed.MainManager;
 import bombe2.exceptions.DataSourceException;
 import java.sql.*;

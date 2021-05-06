@@ -1,4 +1,4 @@
-package example;
+package bombe2.alpha;
 
 public interface DataTable {
     int getInt(String key);
