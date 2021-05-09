@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.function.Consumer;
 
 /**
  * @author Andrea Marco Farioli
@@ -20,7 +21,7 @@ import java.util.NoSuchElementException;
     TODO gestione degli eventi
  */
 
-public final class Manager implements IManager, Propagator, ActionInput {
+public final class Manager implements Propagator, ActionInput {
     private final Map<String, AbstractService> serviceMap = new HashMap<>();
     private final ExtendableService extendableService;
     public Manager(ExtendableService parentService){
@@ -37,7 +38,6 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @param abstractService Servizio che si intende aggiungere
      * @throws KeyAlreadyExistsException Il nome logico assegnato al servizio e' gia' esistente all'interno del manager
      */
-    @Override
     public void addService(AbstractService abstractService) {
         try {
             if (serviceMap.containsKey(abstractService.getEntity().getName()))
@@ -65,7 +65,6 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @param service Servizio che si intende eliminare
      * @throws NoSuchElementException L'elemento che si intende eliminare non esiste all'interno del manager
      */
-    @Override
     public void deleteService(AbstractService service){
         if (!serviceMap.containsKey(service.getEntity().getName()))
             throw new NoSuchElementException();
@@ -78,7 +77,6 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @return Servizio corrispondente al nome logico
      * @throws NoSuchElementException Non e' stato trovato alcuno servizio all'interno della tabella dei servizi del manager
      */
-    @Override
     public AbstractService getService(String name) {
         if (!serviceMap.containsKey(name))
             throw new NoSuchElementException();
@@ -91,7 +89,7 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @return restituisce un oggetto contenitore che puo' passare attraverso la rete mediante RMI.
      */
     @Override
-    public ReturnableObject<?> propagate(EventObject eventObject) throws Exception {
+    public ReturnableObject<?> propagate(EventObject eventObject) throws ReflectiveOperationException {
         if (!eventObject.hasNext())
             throw new PropagationException();
         ReturnableObject<?> returnableObject;
@@ -110,8 +108,8 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * Metodo invocato alla creazione di tutti i servizi
      */
     @Override
-    public void create() throws Exception {
-        ExceptionConsumer<AbstractService, Exception> eventInputConsumer = this::createService;
+    public void create(){
+        Consumer<AbstractService> eventInputConsumer = this::createService;
         iterateAll(eventInputConsumer);
     }
 
@@ -119,8 +117,8 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * Metodo invocato alla distruzione di tutti i servizi
      */
     @Override
-    public void destroy() throws Exception {
-        ExceptionConsumer<AbstractService, Exception> eventInputConsumer= this::destroyService;
+    public void destroy(){
+        Consumer<AbstractService> eventInputConsumer= this::destroyService;
         iterateAll(eventInputConsumer);
     }
 
@@ -128,8 +126,8 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * Metodo invocate all'inizio di tutti i servizi
      */
     @Override
-    public void start() throws Exception {
-        ExceptionConsumer<AbstractService, Exception> eventInputConsumer = this::startService;
+    public void start(){
+        Consumer<AbstractService> eventInputConsumer = this::startService;
         iterateAll(eventInputConsumer);
     }
 
@@ -137,8 +135,8 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * Metodo invocato al blocco di tutti i servizi
      */
     @Override
-    public void stop() throws Exception {
-        ExceptionConsumer<AbstractService, Exception> eventInputConsumer = this::stopService;
+    public void stop(){
+        Consumer<AbstractService> eventInputConsumer = this::stopService;
         iterateAll(eventInputConsumer);
     }
 
@@ -146,8 +144,8 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * Metodo invocato al riavvio di tutti i servizi
      */
     @Override
-    public void restart() throws Exception {
-        ExceptionConsumer<AbstractService, Exception> eventInputConsumer = this::restartService;
+    public void restart() {
+        Consumer<AbstractService> eventInputConsumer = this::restartService;
         iterateAll(eventInputConsumer);
     }
 
@@ -155,8 +153,8 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * Metodo invocato alla messa in pausa di tutti i servizi
      */
     @Override
-    public void pause() throws Exception {
-        ExceptionConsumer<AbstractService, Exception> eventInputConsumer = this::pauseService;
+    public void pause(){
+        Consumer<AbstractService> eventInputConsumer = this::pauseService;
         iterateAll(eventInputConsumer);
     }
 
@@ -164,8 +162,8 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * Metodo invocato alla rimessa in esecuzione, dopo la pausa, di tutti i servizi
      */
     @Override
-    public void resume() throws Exception {
-        ExceptionConsumer<AbstractService, Exception> eventInputConsumer = this::resumeService;
+    public void resume(){
+        Consumer<AbstractService> eventInputConsumer = this::resumeService;
         iterateAll(eventInputConsumer);
     }
     //endregion
@@ -176,7 +174,7 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @param abstractService servizio soggetto
      */
     @Override
-    public void startService(AbstractService abstractService) throws Exception {
+    public void startService(AbstractService abstractService){
         abstractService.onStart();
     }
 
@@ -185,7 +183,7 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @param abstractService servizio soggetto
      */
     @Override
-    public void stopService(AbstractService abstractService) throws Exception {
+    public void stopService(AbstractService abstractService){
         abstractService.onStop();
     }
 
@@ -194,7 +192,7 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @param abstractService servizio soggetto
      */
     @Override
-    public void destroyService(AbstractService abstractService) throws Exception {
+    public void destroyService(AbstractService abstractService){
         abstractService.onDestroy();
     }
 
@@ -203,7 +201,7 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @param abstractService servizio soggetto
      */
     @Override
-    public void createService(AbstractService abstractService) throws Exception {
+    public void createService(AbstractService abstractService){
         abstractService.onCreate();
     }
 
@@ -212,7 +210,7 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @param abstractService servizio soggetto
      */
     @Override
-    public void restartService(AbstractService abstractService) throws Exception {
+    public void restartService(AbstractService abstractService){
         abstractService.onRestart();
     }
 
@@ -221,7 +219,7 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @param abstractService servizio soggetto
      */
     @Override
-    public void pauseService(AbstractService abstractService) throws Exception {
+    public void pauseService(AbstractService abstractService){
         abstractService.onPause();
     }
 
@@ -230,13 +228,13 @@ public final class Manager implements IManager, Propagator, ActionInput {
      * @param abstractService servizio soggetto
      */
     @Override
-    public void resumeService(AbstractService abstractService) throws Exception {
+    public void resumeService(AbstractService abstractService){
             abstractService.onResume();
     }
     //endregion
 
     @SuppressWarnings("unchecked")
-    private <T,E extends Exception>void iterateAll(ExceptionConsumer<T,E> consumer) throws Exception {
+    private <T>void iterateAll(Consumer<T> consumer){
         for (AbstractService abstractService: serviceMap.values())
             consumer.accept((T)abstractService);
     }

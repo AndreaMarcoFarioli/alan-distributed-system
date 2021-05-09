@@ -13,7 +13,7 @@ public abstract class Service extends AbstractService {
         super(name);
     }
     @Override
-    public final ReturnableObject<?> propagate(EventObject eventObject) throws Exception {
+    public final ReturnableObject<?> propagate(EventObject eventObject) throws ReflectiveOperationException {
         ReturnableObject<?> returnableObject;
         if (eventObject.hasNext() && eventObject.isBottomUp()) {
             eventObject.getNext();

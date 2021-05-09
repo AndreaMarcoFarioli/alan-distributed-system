@@ -1,6 +1,8 @@
 package bombe2.exceptions;
 
-public final class MalformedEventException extends RuntimeException {
+import java.io.IOException;
+
+public final class MalformedEventException extends IOException {
     public MalformedEventException(String message){
         super(message);
     }

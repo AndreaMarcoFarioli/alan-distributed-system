@@ -3,6 +3,7 @@ package example;
 import bombe2.annotations.MethodVisibility;
 import bombe2.annotations.VisibilityType;
 import bombe2.core.Service;
+import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 
 public class SubService extends Service {
@@ -16,9 +17,10 @@ public class SubService extends Service {
     }
 
     @MethodVisibility(visibility = VisibilityType.PROTECTED)
-    public ReturnableObject<?> method1(Integer a, Integer b){
+    public ReturnableObject<?> method1(EventObject eventObject, Integer a, Integer b){
         System.out.println(a+b);
         System.out.println(getPath());
+        System.out.println(eventObject.getSessionId());
         return new ReturnableObject<>(a+b);
     }
 }

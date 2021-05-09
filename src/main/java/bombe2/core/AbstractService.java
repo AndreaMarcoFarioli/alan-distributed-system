@@ -28,37 +28,14 @@ public abstract class AbstractService implements Propagator {
     }
 
     //region events
-
-    protected void onManagerAdded(){
-
-    }
-    protected void onCreate() throws Exception {
-
-    }
-
-    protected void onDestroy() throws Exception {
-
-    }
-
-    protected void onStart() throws Exception {
-
-    }
-
-    protected void onStop() throws Exception {
-
-    }
-
-    protected void onPause() throws Exception {
-
-    }
-
-    protected void onResume() throws Exception {
-
-    }
-
-    protected void onRestart() throws Exception {
-
-    }
+    protected void onManagerAdded(){}
+    protected void onCreate() {}
+    protected void onDestroy(){}
+    protected void onStart(){}
+    protected void onStop(){}
+    protected void onPause(){}
+    protected void onResume(){}
+    protected void onRestart(){}
 
     //endregion
     @Deprecated
@@ -77,8 +54,7 @@ public abstract class AbstractService implements Propagator {
                 '}';
     }
 
-    @MethodVisibility
-    public String calcPath(){
+    protected String calcPath(){
         assert propagator != null;
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(((Manager)propagator).forwardPathRequest());
@@ -91,14 +67,14 @@ public abstract class AbstractService implements Propagator {
         return path;
     }
 
-    protected final ReturnableObject<?> propagateInside(EventObject eventObject) throws Exception {
+    protected final ReturnableObject<?> propagateInside(EventObject eventObject) throws ReflectiveOperationException {
         if (eventObject.hasNext())
             throw new PropagationException(
                     "end services can't route = "+
                             eventObject.getCoordinate()
             );
 
-        ReturnableObject<?> returnableObject = null;
+        ReturnableObject<?> returnableObject;
 
         Method method =
                 this.getClass()
@@ -106,7 +82,7 @@ public abstract class AbstractService implements Propagator {
 
         MethodVisibility methodVisibility;
         if ((methodVisibility = method.getAnnotation(MethodVisibility.class)) == null)
-            throw new PropagationException("Method visibility not defined at " + calcPath());
+            throw new PropagationException("Method visibility not defined at " + getPath());
         if (!EventObject.visibilityTest(eventObject.getOrigin(),methodVisibility.visibility()))
             throw new PropagationException(
                     "You can not invoke "
@@ -117,11 +93,8 @@ public abstract class AbstractService implements Propagator {
                             eventObject.getOrigin()
             );
 
-        try{
-            returnableObject = (ReturnableObject<?>) method.invoke(this, eventObject.getParams());
-        }catch (InvocationTargetException invocationTargetException){
-            throw (PropagationException)invocationTargetException.getCause();
-        }
+
+        returnableObject = (ReturnableObject<?>) method.invoke(this, eventObject.getParams());
         return returnableObject;
     }
 }

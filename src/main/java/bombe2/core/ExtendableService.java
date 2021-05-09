@@ -3,6 +3,7 @@ package bombe2.core;
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.distributed.HasManager;
+import bombe2.exceptions.PropagationException;
 
 /**
  * @author Andrea Marco Farioli
@@ -22,7 +23,7 @@ public abstract class ExtendableService extends AbstractService implements HasMa
     }
 
     @Override
-    public final ReturnableObject<?> propagate(EventObject eventObject) throws Exception {
+    public final ReturnableObject<?> propagate(EventObject eventObject) throws ReflectiveOperationException {
         ReturnableObject<?> returnableObject;
         if (eventObject.hasNext()) {
             if (eventObject.isBottomUp()) {
@@ -42,36 +43,36 @@ public abstract class ExtendableService extends AbstractService implements HasMa
     }
 
     @Override
-    protected void onCreate() throws Exception {
+    protected void onCreate(){
         manager.create();
     }
 
     @Override
-    protected void onDestroy()throws Exception {
+    protected void onDestroy(){
         manager.destroy();
     }
 
     @Override
-    protected void onStart()throws Exception {
+    protected void onStart(){
         manager.start();
     }
 
     @Override
-    protected void onStop()throws Exception {
+    protected void onStop(){
         manager.stop();
     }
 
     @Override
-    protected void onPause()throws Exception {
+    protected void onPause(){
         manager.pause();
     }
 
     @Override
-    protected void onResume()throws Exception {
+    protected void onResume(){
         manager.resume();
     }
 
-    protected void onRestart()throws Exception {
+    protected void onRestart(){
         manager.restart();
     }
 }

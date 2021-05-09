@@ -18,8 +18,9 @@ public class ExampleService extends ExtendableService implements IExampleService
     }
 
     @MethodVisibility(visibility = VisibilityType.PUBLIC)
-    public ReturnableObject<?> method() throws Exception {
-        ReturnableObject<?> returnableObject = propagate(new EventObject("subService:method1", 40,2));
+    public ReturnableObject<?> method(EventObject eventObject) throws Exception {
+        eventObject.getSession().destroy();
+        ReturnableObject<?> returnableObject = propagate(eventObject.subEvent("subService:method1",40,2));
         return null;
     }
 }

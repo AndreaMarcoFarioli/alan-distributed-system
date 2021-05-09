@@ -1,8 +1,13 @@
 package bombe2.core.data;
 
+import bombe2.alpha.SessionManager;
+import bombe2.alpha.SessionReference;
+import bombe2.alpha.SystemSessionReference;
 import bombe2.annotations.Origin;
 import bombe2.annotations.VisibilityType;
 import bombe2.exceptions.MalformedEventException;
+import bombe2.exceptions.SessionException;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -17,15 +22,16 @@ import java.util.regex.Pattern;
  * Classe che identifica la struttura standard per la propagazione degli eventi
  */
 public final class EventObject implements Serializable {
+
+    //region declarations
     private String coordinate;
-    private final String original;
-    private final String method;
+    private final String fullPath, method, fork;
+    private final StringBuilder actualPath = new StringBuilder();
     private final Object[] params;
     private final Class<?>[] types;
-    private final String fork;
-    private final StringBuilder actualPath = new StringBuilder();
     private boolean hasNext, isBottomUp;
     private Origin origin = Origin.LOCAL;
+    //endregion
 
     public static final String EVENT_PATTERN =
             "^(?:(?:(?<fork>[a-z0-9_\\-]+)#)?(?<whole>(?<first>(?:[a-z0-9]+|\\^))(\\.(?<second>(?:[a-z0-9]+|\\^)))?(?:(?:\\.(?:[a-z0-9]+|\\^))+)?:))?(?<method>[a-z](?:[a-z0-9]+)?)$";
@@ -33,21 +39,31 @@ public final class EventObject implements Serializable {
             Pattern.compile(EVENT_PATTERN, Pattern.CASE_INSENSITIVE);
     public final static String WHOLE = "whole", FIRST = "first", METHOD = "method", FORK = "fork", SECOND = "second";
 
+    public static final SessionManager sessionManager = new SessionManager();
 
-    public EventObject(String coordinate, Object... params) throws MalformedEventException {
+    private final SessionReference sessionReference;
+
+    public EventObject(String coordinate, String sessionId, Object... params) throws MalformedEventException{
+
+        this.sessionReference = sessionManager.getSession(sessionId);
+
         Matcher matcher = COMPILED_PATTERN.matcher(coordinate);
-
         if (!matcher.matches())
             throw new MalformedEventException();
 
+        this.params = ArrayUtils.addAll(new Object[]{this}, params);
+        this.types = calcTypes(this.params);
         this.fork = matcher.group(FORK);
-        this.coordinate = coordinate.substring(this.fork == null?0:this.fork.length()+1);
-        this.original = this.coordinate;
         this.method = matcher.group(METHOD);
-        this.params = params;
-        this.types = calcTypes(params);
         this.hasNext = matcher.group(WHOLE) != null;
-        this.isBottomUp = matcher.group(FIRST).equals("^");
+        if (this.hasNext)
+            this.isBottomUp = matcher.group(FIRST).equals("^");
+        this.coordinate = coordinate.substring(this.fork == null?0:this.fork.length()+1);
+        this.fullPath = this.coordinate;
+    }
+
+    static {
+        SystemSessionReference.setSessionManager(sessionManager);
     }
 
     public String getFork() {
@@ -121,8 +137,26 @@ public final class EventObject implements Serializable {
         return actualPath.toString();
     }
 
-    public String getOriginal() {
-        return original;
+    public String getFullPath() {
+        return fullPath;
+    }
+
+    public String getSessionId() {
+        return getSession().getSessionId();
+    }
+
+    public SessionReference getSession(){
+        if (!sessionReference.isOpened())
+            throw new SessionException();
+        return sessionReference;
+    }
+
+    public static SessionReference createSession(){
+        return sessionManager.createSession();
+    }
+
+    public EventObject subEvent(String coordinate, Object... params) throws MalformedEventException{
+        return new EventObject(coordinate, this.getSession().getSessionId(), params);
     }
 
     @Override
@@ -131,11 +165,7 @@ public final class EventObject implements Serializable {
                 "coordinate='" + coordinate + '\'' +
                 ", fork ='" + fork + '\'' +
                 ", method='" + method + '\'' +
-                ", params=" + Arrays.toString(params) +
                 ", types=" + Arrays.toString(types) +
-                ", hasNext=" + hasNext +
-                ", isBottomUp="+isBottomUp+
-                ", origin="+origin+
                 '}';
     }
 }
