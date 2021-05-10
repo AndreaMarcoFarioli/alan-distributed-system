@@ -14,6 +14,7 @@ public class ServiceTest extends Service {
     @Override
     protected void onStart() {
         super.onStart();
+        System.out.println("ciao");
     }
 
     @MethodVisibility(visibility = VisibilityType.PUBLIC)

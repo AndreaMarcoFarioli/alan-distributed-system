@@ -4,10 +4,9 @@ import bombe2.annotations.MethodVisibility;
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.core.definitions.Propagator;
-import bombe2.distributed.MainManager;
+import bombe2.distributed.RootManager;
 import bombe2.exceptions.PropagationException;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 //TODO definire una struttura più elegante
@@ -40,7 +39,7 @@ public abstract class AbstractService implements Propagator {
     //endregion
     @Deprecated
     public AbstractService searchServiceRoot(String name){
-        return MainManager.
+        return RootManager.
                 getInstance().
                 getManager().
                 getService(name);

@@ -9,18 +9,18 @@ import java.lang.reflect.Field;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public final class MainManager extends UnicastRemoteObject implements RemoteNode, HasManager {
+public final class RootManager extends UnicastRemoteObject implements RemoteNode, HasManager {
     private final Manager manager = new Manager();
     private NodeProvider nodeProvider;
-    private static MainManager instance = null;
+    private static RootManager instance = null;
 
-    private MainManager() throws RemoteException {
+    private RootManager() throws RemoteException {
     }
 
-    public static MainManager getInstance(){
+    public static RootManager getInstance(){
         if (instance == null) {
             try {
-                instance = new MainManager();
+                instance = new RootManager();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

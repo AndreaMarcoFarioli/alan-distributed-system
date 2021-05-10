@@ -1,6 +1,7 @@
 package bombe2.core.data;
 
 import java.io.Serializable;
+import java.rmi.Remote;
 
 /**
  * Classe contenitore, serializzabile, che viene restituita genericamente dalle invocazioni dei metodi tramite eventi
