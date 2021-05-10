@@ -91,7 +91,7 @@ public final class Manager implements Propagator, ActionInput {
     @Override
     public ReturnableObject<?> propagate(EventObject eventObject) throws ReflectiveOperationException {
         if (!eventObject.hasNext())
-            throw new PropagationException();
+            throw new PropagationException("at " + eventObject.getActualPath());
         ReturnableObject<?> returnableObject;
 
         if (eventObject.isBottomUp()) {
