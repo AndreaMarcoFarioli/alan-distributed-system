@@ -20,6 +20,7 @@ public class SubService extends Service {
     public ReturnableObject<?> method1(EventObject eventObject, Integer a, Integer b){
         System.out.println(a+b);
         System.out.println(getPath());
+        System.out.println(eventObject.getSessionId());
         return new ReturnableObject<>(a+b);
     }
 }

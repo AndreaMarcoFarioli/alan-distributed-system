@@ -1,6 +1,6 @@
 package example;
 
-import bombe2.distributed.SystemSessionReference;
+import bombe2.alpha.SystemSessionReference;
 import bombe2.core.data.EventObject;
 import bombe2.distributed.NodeProvider;
 import bombe2.distributed.RemoteNode;

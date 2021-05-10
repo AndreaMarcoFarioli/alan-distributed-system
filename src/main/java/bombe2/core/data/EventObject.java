@@ -1,10 +1,13 @@
 package bombe2.core.data;
 
-import bombe2.core.SessionManager;
-import bombe2.core.SessionReference;
+import bombe2.alpha.SessionManager;
+import bombe2.alpha.SessionReference;
+import bombe2.alpha.SystemSessionReference;
 import bombe2.annotations.Origin;
 import bombe2.annotations.VisibilityType;
 import bombe2.exceptions.MalformedEventException;
+import bombe2.exceptions.SessionException;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -19,6 +22,7 @@ import java.util.regex.Pattern;
  * Classe che identifica la struttura standard per la propagazione degli eventi
  */
 public final class EventObject implements Serializable {
+
     //region declarations
     private String coordinate;
     private final String fullPath, method, fork;
@@ -37,17 +41,17 @@ public final class EventObject implements Serializable {
 
     public static final SessionManager sessionManager = new SessionManager();
 
-    //private final SessionReference sessionReference;
+    private final SessionReference sessionReference;
 
-    public EventObject(String coordinate, Object... params) throws MalformedEventException{
+    public EventObject(String coordinate, String sessionId, Object... params) throws MalformedEventException{
 
-        //this.sessionReference = sessionManager.getSession(sessionId);
+        this.sessionReference = sessionManager.getSession(sessionId);
 
         Matcher matcher = COMPILED_PATTERN.matcher(coordinate);
         if (!matcher.matches())
             throw new MalformedEventException();
 
-        this.params = params;
+        this.params = ArrayUtils.addAll(new Object[]{this}, params);
         this.types = calcTypes(this.params);
         this.fork = matcher.group(FORK);
         this.method = matcher.group(METHOD);
@@ -58,7 +62,11 @@ public final class EventObject implements Serializable {
         this.fullPath = this.coordinate;
     }
 
-    public final String getFork() {
+    static {
+        SystemSessionReference.setSessionManager(sessionManager);
+    }
+
+    public String getFork() {
         return fork;
     }
 
@@ -69,15 +77,15 @@ public final class EventObject implements Serializable {
         return types;
     }
 
-    public final Object[] getParams() {
+    public Object[] getParams() {
         return params;
     }
 
-    public final Origin getOrigin() {
+    public Origin getOrigin() {
         return origin;
     }
 
-    public final Class<?>[] getTypes() {
+    public Class<?>[] getTypes() {
         return types;
     }
 
@@ -86,7 +94,7 @@ public final class EventObject implements Serializable {
      * @return nome del servizio successivo
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public final String getNext(){
+    public String getNext(){
         Matcher matcher = COMPILED_PATTERN.matcher(coordinate);
         matcher.matches();
         String result = matcher.group(FIRST);
@@ -100,19 +108,19 @@ public final class EventObject implements Serializable {
         return result;
     }
 
-    public final boolean hasNext(){
+    public boolean hasNext(){
         return this.hasNext;
     }
 
-    public final String getMethod(){
+    public String getMethod(){
         return this.method;
     }
 
-    public final String getCoordinate() {
+    public String getCoordinate() {
         return coordinate;
     }
 
-    public final boolean isBottomUp() {
+    public boolean isBottomUp() {
         return isBottomUp;
     }
 
@@ -125,16 +133,30 @@ public final class EventObject implements Serializable {
         return (L && l) || r && (R || L);
     }
 
-    public final String getActualPath() {
+    public String getActualPath() {
         return actualPath.toString();
     }
 
-    public final String getFullPath() {
+    public String getFullPath() {
         return fullPath;
+    }
+
+    public String getSessionId() {
+        return getSession().getSessionId();
+    }
+
+    public SessionReference getSession(){
+        if (!sessionReference.isOpened())
+            throw new SessionException();
+        return sessionReference;
     }
 
     public static SessionReference createSession(){
         return sessionManager.createSession();
+    }
+
+    public EventObject subEvent(String coordinate, Object... params) throws MalformedEventException{
+        return new EventObject(coordinate, this.getSession().getSessionId(), params);
     }
 
     @Override

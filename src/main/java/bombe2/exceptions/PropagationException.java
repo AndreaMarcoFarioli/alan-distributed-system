@@ -5,5 +5,7 @@ public final class PropagationException extends RuntimeException{
         super(message);
     }
 
-    public PropagationException(){}
+    public PropagationException(){
+
+    }
 }
