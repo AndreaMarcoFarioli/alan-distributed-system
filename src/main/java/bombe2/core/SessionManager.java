@@ -1,34 +1,32 @@
 package bombe2.core;
 
+import bombe2.core.definitions.ISessionManager;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class SessionManager {
+public class SessionManager implements ISessionManager {
     private final Map<String,SessionReference> sessionMap =  new HashMap<>();
-    private final AtomicInteger counter = new AtomicInteger(0);
 
-    public void destroySession(String sessionId){
-        sessionMap.remove(sessionId);
-    }
 
+    @Override
     public SessionReference createSession(){
         SessionReference sessionReference = new SessionReference(this);
         sessionMap.put(sessionReference.getSessionId(), sessionReference);
         return sessionReference;
     }
 
-    public String generateSessionId(){
-        String sessionId = DigestUtils.sha256Hex(System.nanoTime()+"");
-        return sessionId;
+    public static String generateSessionId(){
+        return DigestUtils.sha256Hex(Long.toString(System.nanoTime()));
     }
 
+    @Override
     public SessionReference getSession(String sessionId){
         return sessionMap.get(sessionId);
     }
 
+    @Override
     public boolean available(String sessionId){
         SessionReference sessionReference;
         boolean available = (sessionReference = sessionMap.get(sessionId)) != null;
@@ -37,6 +35,12 @@ public class SessionManager {
         return available;
     }
 
+    @Override
+    public void destroySession(String sessionId){
+        sessionMap.remove(sessionId);
+    }
+
+    @Override
     public int sessionCount(){
         return sessionMap.size();
     }
