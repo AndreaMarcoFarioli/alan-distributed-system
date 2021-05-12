@@ -1,0 +1,34 @@
+package bombe2.distributed;
+
+import bombe2.core.SessionManager;
+import bombe2.core.SessionReference;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class LocalSessionManager extends SessionManager {
+    private final Map<String, SessionReference> sessionMap = new HashMap<>();
+
+    @Override
+    public SessionReference createSession() {
+        String sessionId = generateSessionId();
+        SessionReference sessionReference = new LocalSessionReference(this, sessionId);
+        sessionMap.put(sessionId, sessionReference);
+        return sessionReference;
+    }
+
+    @Override
+    public SessionReference getSession(String sessionId) {
+        return sessionMap.get(sessionId);
+    }
+
+    @Override
+    public void destroySession(String sessionId) {
+        sessionMap.remove(sessionId);
+    }
+
+    @Override
+    public int sessionCount() {
+        return sessionMap.size();
+    }
+}

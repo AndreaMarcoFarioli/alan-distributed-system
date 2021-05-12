@@ -15,7 +15,7 @@ public class SessionDatabaseStorage extends DatabaseStorage {
         this.sessionReference = sessionReference;
     }
 
-    public String getSessionId() {
+    private String getSessionId() {
         return sessionReference.getReference().getSessionId();
     }
 

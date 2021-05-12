@@ -6,7 +6,7 @@ import bombe2.core.SessionReference;
 public class SystemSessionReference extends SessionReference {
     private static SystemSessionReference sessionReference;
     private SystemSessionReference(SessionManager sessionManager){
-        super(sessionManager);
+        super(sessionManager, "", null);
     };
 
     public static SessionReference getInstance(){

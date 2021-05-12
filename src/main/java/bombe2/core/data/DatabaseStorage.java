@@ -8,7 +8,8 @@ public class DatabaseStorage implements Storage {
             insertQuery = "INSERT INTO vars VALUES (?, ?) ON DUPLICATE KEY UPDATE val=?",
             getQuery = "SELECT val FROM vars WHERE name=?",
             deleteRecord = "DELETE FROM vars WHERE name=?";
-    public DatabaseStorage(){
+
+    static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {

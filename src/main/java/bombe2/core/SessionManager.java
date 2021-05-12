@@ -1,47 +1,25 @@
 package bombe2.core;
 
-import bombe2.core.definitions.ISessionManager;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+public abstract class SessionManager {
+    public abstract SessionReference createSession();
 
-public class SessionManager implements ISessionManager {
-    private final Map<String,SessionReference> sessionMap =  new HashMap<>();
-
-
-    @Override
-    public SessionReference createSession(){
-        SessionReference sessionReference = new SessionReference(this);
-        sessionMap.put(sessionReference.getSessionId(), sessionReference);
-        return sessionReference;
-    }
-
-    public static String generateSessionId(){
+    public String generateSessionId(){
         return DigestUtils.sha256Hex(Long.toString(System.nanoTime()));
     }
 
-    @Override
-    public SessionReference getSession(String sessionId){
-        return sessionMap.get(sessionId);
-    }
+    public abstract SessionReference getSession(String sessionId);
 
-    @Override
     public boolean available(String sessionId){
         SessionReference sessionReference;
-        boolean available = (sessionReference = sessionMap.get(sessionId)) != null;
+        boolean available = (sessionReference = getSession(sessionId)) != null;
         if (available)
             available = sessionReference.isOpened();
         return available;
     }
 
-    @Override
-    public void destroySession(String sessionId){
-        sessionMap.remove(sessionId);
-    }
+    public abstract void destroySession(String sessionId);
 
-    @Override
-    public int sessionCount(){
-        return sessionMap.size();
-    }
+    public abstract int sessionCount();
 }

@@ -1,24 +1,28 @@
 package bombe2.core;
 
+import bombe2.core.data.Storage;
+import bombe2.exceptions.NoSuchSessionException;
 import bombe2.exceptions.SessionException;
 
-public class SessionReference {
+public abstract class SessionReference {
     private boolean opened = true;
     private final SessionManager sessionManager;
     private final String sessionId;
-    //private final DataTable dataTable = new DatabaseVarT("");
+    private Storage storage;
 
-    public SessionReference(SessionManager sessionManager){
-        this(sessionManager, sessionManager.generateSessionId());
-    }
-
-    protected SessionReference(SessionManager sessionManager, String sessionId){
+    protected SessionReference(SessionManager sessionManager, String sessionId, Storage storage){
         this.sessionManager = sessionManager;
         this.sessionId = sessionId;
+        this.storage = storage;
+    }
+
+    public void setStorage(Storage storage) {
+        if (getReference().storage == null)
+            this.storage = storage;
     }
 
     public void destroy(){
-        sessionManager.destroySession(sessionId);
+        getReference().sessionManager.destroySession(sessionId);
         opened = false;
     }
 
@@ -31,8 +35,19 @@ public class SessionReference {
     }
 
     public SessionReference getReference(){
-        if (!opened)
-            throw new SessionException("Session " + sessionId + " is closed");
+        if (!isOpened() || !sessionManager.available(sessionId))
+            throw new SessionException("Session " + sessionId + " is closed or does not exist anymore");
         return this;
+    }
+
+    public Storage getStorage() {
+        return getReference().storage;
+    }
+
+    @Override
+    public String toString() {
+        return "SessionReference{" +
+                "sessionId='" + sessionId + '\'' +
+                '}';
     }
 }
