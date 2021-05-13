@@ -6,7 +6,7 @@ import bombe2.core.SessionReference;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LocalSessionManager extends SessionManager {
+public final class LocalSessionManager extends SessionManager {
     private final Map<String, SessionReference> sessionMap = new HashMap<>();
 
     @Override
@@ -30,5 +30,10 @@ public class LocalSessionManager extends SessionManager {
     @Override
     public int sessionCount() {
         return sessionMap.size();
+    }
+
+    @Override
+    public void destroyAll() {
+
     }
 }

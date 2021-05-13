@@ -16,7 +16,7 @@ public abstract class SessionReference {
         this.storage = storage;
     }
 
-    public void setStorage(Storage storage) {
+    protected void setStorage(Storage storage) {
         if (getReference().storage == null)
             this.storage = storage;
     }
@@ -34,7 +34,7 @@ public abstract class SessionReference {
         return opened;
     }
 
-    public SessionReference getReference(){
+    public final SessionReference getReference(){
         if (!isOpened() || !sessionManager.available(sessionId))
             throw new SessionException("Session " + sessionId + " is closed or does not exist anymore");
         return this;
@@ -50,4 +50,5 @@ public abstract class SessionReference {
                 "sessionId='" + sessionId + '\'' +
                 '}';
     }
+    
 }

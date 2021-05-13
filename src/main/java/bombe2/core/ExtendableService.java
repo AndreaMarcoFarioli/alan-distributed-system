@@ -2,8 +2,7 @@ package bombe2.core;
 
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
-import bombe2.distributed.HasManager;
-import bombe2.exceptions.PropagationException;
+import bombe2.core.definitions.HasManager;
 
 /**
  * @author Andrea Marco Farioli

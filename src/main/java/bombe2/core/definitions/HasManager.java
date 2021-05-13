@@ -1,4 +1,4 @@
-package bombe2.distributed;
+package bombe2.core.definitions;
 
 import bombe2.core.Manager;
 

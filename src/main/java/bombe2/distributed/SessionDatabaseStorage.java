@@ -4,7 +4,7 @@ import bombe2.core.SessionReference;
 import bombe2.core.data.DatabaseStorage;
 
 
-public class SessionDatabaseStorage extends DatabaseStorage {
+public final class SessionDatabaseStorage extends DatabaseStorage {
     private final SessionReference sessionReference;
 
     private static final String

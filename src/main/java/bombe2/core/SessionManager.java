@@ -22,4 +22,6 @@ public abstract class SessionManager {
     public abstract void destroySession(String sessionId);
 
     public abstract int sessionCount();
+
+    public abstract void destroyAll();
 }

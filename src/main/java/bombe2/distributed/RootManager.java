@@ -4,6 +4,7 @@ import bombe2.annotations.Origin;
 import bombe2.core.data.EventObject;
 import bombe2.core.Manager;
 import bombe2.core.data.ReturnableObject;
+import bombe2.core.definitions.HasManager;
 import bombe2.exceptions.MalformedEventException;
 import java.lang.reflect.Field;
 import java.rmi.RemoteException;

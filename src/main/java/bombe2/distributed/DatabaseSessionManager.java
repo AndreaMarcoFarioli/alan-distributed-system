@@ -2,24 +2,36 @@ package bombe2.distributed;
 
 import bombe2.core.SessionManager;
 import bombe2.core.SessionReference;
+import bombe2.exceptions.FatalSessionException;
 import bombe2.exceptions.NoSuchSessionException;
 import bombe2.exceptions.SessionException;
 
 import java.sql.*;
 
-public class DatabaseSessionManager extends SessionManager {
+public final class DatabaseSessionManager extends SessionManager {
+
+
 
     private static final String
             createSessionQuery = "INSERT INTO session_storage (sid) VALUES (?)",
             connection = "jdbc:mysql://localhost/bombe",
             getSessionBySid = "SELECT sid FROM session_storage WHERE sid=?",
             destroySession = "DELETE FROM session_storage WHERE sid=?",
-            countQuery = "SELECT COUNT(*) FROM session_storage";
+            countQuery = "SELECT COUNT(*) FROM session_storage",
+            destroyAll = "DELETE FROM session_storage WHERE 1";
 
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public DatabaseSessionManager(){
+        try {
+            Runtime.getRuntime().addShutdownHook(new Thread(this::destroyAll));
+        }catch (FatalSessionException e){
             e.printStackTrace();
         }
     }
@@ -108,6 +120,17 @@ public class DatabaseSessionManager extends SessionManager {
         return count;
     }
 
+    @Override
+    public void destroyAll() {
+        try(Connection connection = provideConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(getDestroyAll());
+            int res = preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw new FatalSessionException();
+        }
+    }
+
     public static String getCreateSessionQuery() {
         return createSessionQuery;
     }
@@ -126,5 +149,9 @@ public class DatabaseSessionManager extends SessionManager {
 
     public static String getConnection() {
         return connection;
+    }
+
+    public static String getDestroyAll() {
+        return destroyAll;
     }
 }

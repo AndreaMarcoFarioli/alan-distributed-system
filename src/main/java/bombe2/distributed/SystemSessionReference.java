@@ -3,7 +3,7 @@ package bombe2.distributed;
 import bombe2.core.SessionManager;
 import bombe2.core.SessionReference;
 
-public class SystemSessionReference extends SessionReference {
+public final class SystemSessionReference extends SessionReference {
     private static SystemSessionReference sessionReference;
     private SystemSessionReference(SessionManager sessionManager){
         super(sessionManager, "", null);

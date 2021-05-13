@@ -5,7 +5,7 @@ import bombe2.core.data.EventObject;
 import bombe2.exceptions.MalformedEventException;
 import org.apache.commons.lang3.ArrayUtils;
 
-public class SessionProvider {
+public final class SessionProvider {
     private final SessionReference sessionReference;
 
     public SessionProvider(){
