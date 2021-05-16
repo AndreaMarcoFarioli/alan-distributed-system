@@ -52,9 +52,7 @@ public final class RootManager extends UnicastRemoteObject implements RemoteNode
 
     public ReturnableObject<?> sendOver(EventObject eventObject)
             throws ReflectiveOperationException, RemoteException, MalformedEventException {
-        ReturnableObject<?> returnableObject = null;
-        returnableObject = nodeProvider.getNode().call(nodeProvider.middleware(eventObject));
-        return returnableObject;
+        return nodeProvider.call(eventObject);
     }
 
     @Override
