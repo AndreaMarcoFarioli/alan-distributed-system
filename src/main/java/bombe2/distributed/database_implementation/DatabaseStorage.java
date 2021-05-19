@@ -1,10 +1,11 @@
-package bombe2.core.data;
+package bombe2.distributed.database_implementation;
+
+import bombe2.core.data.Storage;
 
 import java.sql.*;
 
 public class DatabaseStorage implements Storage {
     private static final String
-            connection = "jdbc:mysql://localhost/bombe",
             insertQuery = "INSERT INTO vars VALUES (?, ?) ON DUPLICATE KEY UPDATE val=?",
             getQuery = "SELECT val FROM vars WHERE name=?",
             deleteRecord = "DELETE FROM vars WHERE name=?";
@@ -19,7 +20,7 @@ public class DatabaseStorage implements Storage {
 
     @Override
     public <T> void setParameter(String name, T value) {
-        try (Connection connection = DriverManager.getConnection(getConnection(), "root", "")){
+        try (Connection connection = DatabaseConfig.getConnection()){
             PreparedStatement ps = connection.prepareStatement(getInsertQuery());
             set(ps, name, value, value);
             ps.execute();
@@ -28,6 +29,7 @@ public class DatabaseStorage implements Storage {
         }
     }
 
+    @Deprecated
     protected void set(PreparedStatement ps, Object... params) throws SQLException{
         for(int i = 0; i < params.length; i++){
             ps.setObject(i+1,params[i]);
@@ -35,9 +37,9 @@ public class DatabaseStorage implements Storage {
     }
 
     @Override
-    public Object getParameter(String name, Class<?> type) {
+    public <T>T getParameter(String name, Class<T> type) {
         Object result = null;
-        try (Connection connection = DriverManager.getConnection(getConnection(), "root", "")){
+        try (Connection connection = DatabaseConfig.getConnection()){
             PreparedStatement ps = connection.prepareStatement(getGetQuery());
             set(ps, name);
             ResultSet resultSet = ps.executeQuery();
@@ -47,12 +49,12 @@ public class DatabaseStorage implements Storage {
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return result;
+        return type.cast(result);
     }
 
     @Override
     public void clear(String name) {
-        try (Connection connection = DriverManager.getConnection(getConnection(), "root", "")){
+        try (Connection connection = DatabaseConfig.getConnection()){
             PreparedStatement ps = connection.prepareStatement(getDeleteRecord());
             set(ps, name);
             ps.execute();
@@ -71,9 +73,5 @@ public class DatabaseStorage implements Storage {
 
     public static String getDeleteRecord() {
         return deleteRecord;
-    }
-
-    public static String getConnection() {
-        return connection;
     }
 }

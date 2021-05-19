@@ -1,7 +1,6 @@
-package bombe2.distributed;
+package bombe2.distributed.database_implementation;
 
 import bombe2.core.SessionReference;
-import bombe2.core.data.DatabaseStorage;
 
 
 public final class SessionDatabaseStorage extends DatabaseStorage {

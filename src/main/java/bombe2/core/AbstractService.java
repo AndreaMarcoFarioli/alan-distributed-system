@@ -66,7 +66,8 @@ public abstract class AbstractService implements Propagator {
         return path;
     }
 
-    protected final ReturnableObject<?> propagateInside(EventObject eventObject) throws ReflectiveOperationException {
+    protected final ReturnableObject<?> propagateInside(EventObject eventObject)
+            throws ReflectiveOperationException {
         if (eventObject.hasNext())
             throw new PropagationException(
                     "end services can't route = "+

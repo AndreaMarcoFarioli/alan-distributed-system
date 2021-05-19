@@ -1,49 +1,33 @@
-package bombe2.distributed;
+package bombe2.distributed.database_implementation;
 
 import bombe2.core.SessionManager;
 import bombe2.core.SessionReference;
-import bombe2.exceptions.FatalSessionException;
+import bombe2.exceptions.FatalException;
 import bombe2.exceptions.NoSuchSessionException;
 import bombe2.exceptions.SessionException;
 
 import java.sql.*;
 
 public final class DatabaseSessionManager extends SessionManager {
-
-
-
     private static final String
             createSessionQuery = "INSERT INTO session_storage (sid) VALUES (?)",
-            connection = "jdbc:mysql://localhost/bombe",
             getSessionBySid = "SELECT sid FROM session_storage WHERE sid=?",
             destroySession = "DELETE FROM session_storage WHERE sid=?",
             countQuery = "SELECT COUNT(*) FROM session_storage",
             destroyAll = "DELETE FROM session_storage WHERE 1";
 
-    static {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     public DatabaseSessionManager(){
         try {
             Runtime.getRuntime().addShutdownHook(new Thread(this::destroyAll));
-        }catch (FatalSessionException e){
+        }catch (FatalException e){
             e.printStackTrace();
         }
-    }
-
-    private Connection provideConnection() throws SQLException{
-        return DriverManager.getConnection(getConnection(), "root", "");
     }
 
     @Override
     public SessionReference createSession() {
         SessionReference sessionReference;
-        try(Connection connection = provideConnection()){
+        try(Connection connection = DatabaseConfig.getConnection()){
             PreparedStatement ps = connection.prepareStatement(getCreateSessionQuery());
             String sessionId = generateSessionId();
             ps.setString(1, sessionId);
@@ -61,7 +45,7 @@ public final class DatabaseSessionManager extends SessionManager {
     @Override
     public SessionReference getSession(String sessionId) {
         SessionReference sessionReference;
-        try(Connection connection = provideConnection()){
+        try(Connection connection = DatabaseConfig.getConnection()){
             PreparedStatement ps = connection.prepareStatement(getGetSessionBySid());
             ps.setString(1, sessionId);
             ResultSet resultSet = ps.executeQuery();
@@ -78,7 +62,7 @@ public final class DatabaseSessionManager extends SessionManager {
     @Override
     public boolean available(String sessionId) {
         boolean available = true;
-        try(Connection connection = provideConnection()){
+        try(Connection connection = DatabaseConfig.getConnection()){
             PreparedStatement ps = connection.prepareStatement(getGetSessionBySid());
             ps.setString(1, sessionId);
             ResultSet resultSet = ps.executeQuery();
@@ -93,7 +77,7 @@ public final class DatabaseSessionManager extends SessionManager {
 
     @Override
     public void destroySession(String sessionId) {
-        try(Connection connection = provideConnection()){
+        try(Connection connection = DatabaseConfig.getConnection()){
             PreparedStatement ps = connection.prepareStatement(getDestroySession());
             ps.setString(1, sessionId);
             int deleted = ps.executeUpdate();
@@ -108,7 +92,7 @@ public final class DatabaseSessionManager extends SessionManager {
     @Override
     public int sessionCount() {
         int count = 0;
-        try(Connection connection = provideConnection()){
+        try(Connection connection = DatabaseConfig.getConnection()){
             PreparedStatement ps = connection.prepareStatement(getCountQuery());
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next())
@@ -122,12 +106,12 @@ public final class DatabaseSessionManager extends SessionManager {
 
     @Override
     public void destroyAll() {
-        try(Connection connection = provideConnection()){
+        try(Connection connection = DatabaseConfig.getConnection()){
             PreparedStatement preparedStatement = connection.prepareStatement(getDestroyAll());
             int res = preparedStatement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
-            throw new FatalSessionException();
+            throw new FatalException();
         }
     }
 
@@ -145,10 +129,6 @@ public final class DatabaseSessionManager extends SessionManager {
 
     public static String getGetSessionBySid() {
         return getSessionBySid;
-    }
-
-    public static String getConnection() {
-        return connection;
     }
 
     public static String getDestroyAll() {

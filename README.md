@@ -49,7 +49,7 @@ Queste identità vengono fornite in forma generica e astratta, e devono essere e
 
 Per fornire un grado di trasparenza, e anche un contenitore in cui inserirli, i Manager giocano un ruolo chiave per la gestione dei Servizi. Infatti il Manager non e' niente di meno che un gestore di tanti servizi, gestisce quando vengono creati o distrutti e compie il ruolo fondamentale di inoltro delle richieste di esecuzione. 
 
-I Manager sono anche propagatori degli eventi facenti parte del ciclo di vita dei servizi e gestiscono i servizi in base alle esigenze (un Manager generico, che prima o poi ci sara' e definiremo come bombe2.distributed.Main Manager, richiederà l'esecuzione di questi metodi in base alle condizioni della macchina, o in base alle richieste di altri servizi).
+I Manager sono anche propagatori degli eventi facenti parte del ciclo di vita dei servizi e gestiscono i servizi in base alle esigenze (un Manager generico, che prima o poi ci sara' e definiremo come Main Manager, richiederà l'esecuzione di questi metodi in base alle condizioni della macchina, o in base alle richieste di altri servizi).
 
 **Gli Eventi** (potrebbe variare il nome in Intenti)
 
@@ -101,7 +101,7 @@ Introduciamo ora una parte davvero importante, gli eventi. Per evento, in questo
 
 //
 
-**bombe2.distributed.Main Manager**
+**Main Manager**
 
 //
 
