@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="DistributedSystem" />
         <module name="bombe2.0" />
+        <module name="alan-distributed-system" />
       </profile>
     </annotationProcessing>
   </component>

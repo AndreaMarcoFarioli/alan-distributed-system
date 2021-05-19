@@ -56,9 +56,14 @@ public class MathService extends Service {
     }
 
 
-    @MethodVisibility(visibility = VisibilityType.PUBLIC)
+    @MethodVisibility(visibility = VisibilityType.PROTECTED)
     public ReturnableObject<?> test(Integer port){
         System.out.println(port);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

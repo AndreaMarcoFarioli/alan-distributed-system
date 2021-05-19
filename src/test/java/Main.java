@@ -17,7 +17,7 @@ import java.util.TimerTask;
 public class Main {
     public static int port = 1000 + (int)(Math.random()*100);
     public static void main(String[] args) throws Exception {
-
+        System.out.println("im "+ port);
         //SessionReference sessionReference = SystemSessionReference.getInstance();
         //sessionReference.getStorage().setParameter("port", port);
 
@@ -37,9 +37,17 @@ public class Main {
 
         Timer timer = new Timer();
 
-        long d1 = System.nanoTime();
-        System.out.println(RootManager.getInstance().sendOver(new EventObject("math:sum", 1000)).getData());
-        long d2 = System.nanoTime();
-        System.out.println(d2-d1);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    RootManager.getInstance().getManager().propagate(new EventObject("math:test", port));
+                } catch (ReflectiveOperationException e) {
+                    e.printStackTrace();
+                } catch (MalformedEventException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 0, 1000);
     }
 }
