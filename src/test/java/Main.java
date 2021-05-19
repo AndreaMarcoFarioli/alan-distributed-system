@@ -1,13 +1,16 @@
 import bombe2.core.Manager;
+import bombe2.core.SessionManager;
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.distributed.*;
+import bombe2.distributed.database_implementation.DatabaseSessionManager;
 import bombe2.exceptions.MalformedEventException;
 import bombe2.distributed.database_implementation.DatabaseComUnit;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,10 +35,11 @@ public class Main {
 
         comUnit.setNodeAvailability(true);
 
+        Timer timer = new Timer();
 
-        ReturnableObject<?> r = RootManager.getInstance().sendOver(new EventObject("math:sum", 10));
-
-        System.out.println(r);
-
+        long d1 = System.nanoTime();
+        System.out.println(RootManager.getInstance().sendOver(new EventObject("math:sum", 1000)).getData());
+        long d2 = System.nanoTime();
+        System.out.println(d2-d1);
     }
 }

@@ -36,7 +36,6 @@ public class MathService extends Service {
                     reflectiveOperationException.printStackTrace();
                 }
             });
-            System.out.println(i);
         }
         threadPool.shutdown();
         try {
@@ -56,6 +55,12 @@ public class MathService extends Service {
         return new ReturnableObject<>(integer);
     }
 
+
+    @MethodVisibility(visibility = VisibilityType.PUBLIC)
+    public ReturnableObject<?> test(Integer port){
+        System.out.println(port);
+        return null;
+    }
 
 
 }

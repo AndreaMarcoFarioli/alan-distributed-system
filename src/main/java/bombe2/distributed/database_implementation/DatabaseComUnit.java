@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.UnmarshalException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -25,7 +26,7 @@ public class DatabaseComUnit extends UnicastRemoteObject implements InterComUnit
 
     private static final String
         createNode = "INSERT INTO node (host, port) VALUES (?, ?)",
-        selectNodeForUpdate = "SELECT * FROM node WHERE available=true AND score = (SELECT MIN(score) FROM node) ORDER BY rand() ASC LIMIT 1 FOR UPDATE",
+        selectNodeForUpdate = "SELECT * FROM node WHERE available=true AND score = (SELECT MIN(score) FROM node WHERE available=true) ORDER BY rand() ASC LIMIT 1 FOR UPDATE",
         updateScoreNode = "UPDATE node SET score = score %s 1 WHERE id = ?",
         deleteNode = "DELETE FROM node WHERE id = ?",
         setAvailability = "UPDATE node SET available = ? WHERE id = ?",
@@ -119,11 +120,14 @@ public class DatabaseComUnit extends UnicastRemoteObject implements InterComUnit
                     returnableObject = remoteNode.call(eventObject);
                 } else
                     throw new SQLException("Something went wrong, node not found");
-            }catch (SQLException | NotBoundException | RemoteException  e){
+            } catch (SQLException | NotBoundException e){
                 e.printStackTrace();
                 connection.rollback();
                 throw new SQLException("rollback");
-            }finally {
+            } catch (RemoteException e){
+                e.printStackTrace();
+                connection.rollback();
+            } finally {
                 if (id != -1)
                     calcScore(connection, id, false);
                 if (pid != -1)
