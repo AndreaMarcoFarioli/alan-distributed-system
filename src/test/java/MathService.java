@@ -38,7 +38,7 @@ public class MathService extends Service {
     private int callExec(long dim){
         int o = -1;
         try{
-            o = (Integer)RootManager.getInstance().sendOver(new EventObject("math:exec", dim)).getData();
+            o = (Integer)RootManager.getInstance().getInterComChannel().sendOver(new EventObject("math:exec", dim)).getData();
         }catch (Exception ignored){}
         return o;
     }

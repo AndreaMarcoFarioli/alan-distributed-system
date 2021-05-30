@@ -1,12 +1,3 @@
-<<<<<<< Updated upstream
-import bombe2.distributed.DatabaseSessionManager;
-
-public class Main {
-    public static void main(String[] args) {
-        DatabaseSessionManager databaseSessionManager = new DatabaseSessionManager();
-        databaseSessionManager.createSession();
-        System.out.println("ciao");
-=======
 import bombe2.core.Manager;
 import bombe2.core.SessionReference;
 import bombe2.core.data.EventObject;
@@ -48,9 +39,5 @@ public class Main {
         DatabaseSessionManager databaseSessionManager = new DatabaseSessionManager();
         SessionReference sessionReference = databaseSessionManager.createSession();
         sessionReference.getStorage().setParameter("var1", "ciao");
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     }
 }

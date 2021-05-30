@@ -3,20 +3,19 @@ package bombe2.distributed.database_implementation;
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.core.definitions.Propagator;
-import bombe2.distributed.InterComUnit;
+import bombe2.distributed.InterComChannel;
 import bombe2.distributed.RemoteNode;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.UnmarshalException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
 
-public class DatabaseComUnit extends UnicastRemoteObject implements InterComUnit, AutoCloseable {
+public class DatabaseComUnit extends UnicastRemoteObject implements InterComChannel, AutoCloseable {
 
     private final Propagator propagator;
 
