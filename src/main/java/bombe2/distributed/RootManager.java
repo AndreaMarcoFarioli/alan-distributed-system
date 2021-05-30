@@ -8,11 +8,18 @@ import bombe2.core.definitions.HasManager;
 import bombe2.exceptions.MalformedEventException;
 import java.lang.reflect.Field;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
 public final class RootManager extends UnicastRemoteObject implements RemoteNode, HasManager {
     private final Manager manager = new Manager();
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     private NodeProvider nodeProvider;
+=======
+    private InterComChannel interComUnit;
+>>>>>>> Stashed changes
+=======
+    private InterComChannel interComUnit;
+>>>>>>> Stashed changes
     private static RootManager instance = null;
 
     private RootManager() throws RemoteException {
@@ -29,6 +36,17 @@ public final class RootManager extends UnicastRemoteObject implements RemoteNode
         return instance;
     }
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+=======
+>>>>>>> Stashed changes
+    public void init(InterComChannel interComUnit){
+        if (this.interComUnit == null)
+            this.interComUnit = interComUnit;
+    }
+
+>>>>>>> Stashed changes
     /**
      *
      * @param eventObject

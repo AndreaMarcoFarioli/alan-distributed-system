@@ -1,8 +1,9 @@
 package bombe2.core;
 
+import bombe2.core.data.ISessionManager;
 import org.apache.commons.codec.digest.DigestUtils;
 
-public abstract class SessionManager {
+public abstract class SessionManager implements ISessionManager {
     public abstract SessionReference createSession();
 
     public String generateSessionId(){
