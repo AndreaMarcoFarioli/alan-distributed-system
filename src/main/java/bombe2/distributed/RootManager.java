@@ -5,15 +5,21 @@ import bombe2.core.data.EventObject;
 import bombe2.core.Manager;
 import bombe2.core.data.ReturnableObject;
 import bombe2.core.definitions.HasManager;
-import bombe2.core.definitions.Propagator;
 import bombe2.exceptions.MalformedEventException;
 import java.lang.reflect.Field;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
-public final class RootManager implements HasManager, Propagator {
+public final class RootManager extends UnicastRemoteObject implements RemoteNode, HasManager {
     private final Manager manager = new Manager();
-    private InterComUnit interComUnit;
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    private NodeProvider nodeProvider;
+=======
+    private InterComChannel interComUnit;
+>>>>>>> Stashed changes
+=======
+    private InterComChannel interComUnit;
+>>>>>>> Stashed changes
     private static RootManager instance = null;
 
     private RootManager() throws RemoteException {
@@ -30,11 +36,17 @@ public final class RootManager implements HasManager, Propagator {
         return instance;
     }
 
-    public void init(InterComUnit interComUnit){
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+=======
+>>>>>>> Stashed changes
+    public void init(InterComChannel interComUnit){
         if (this.interComUnit == null)
             this.interComUnit = interComUnit;
     }
 
+>>>>>>> Stashed changes
     /**
      *
      * @param eventObject
@@ -42,7 +54,7 @@ public final class RootManager implements HasManager, Propagator {
      * @throws Exception
      */
     @Override
-    public ReturnableObject<?> propagate(EventObject eventObject) throws ReflectiveOperationException {
+    public ReturnableObject<?> call(EventObject eventObject) throws ReflectiveOperationException, RemoteException {
         ReturnableObject<?> returnableObject;
         Field field = EventObject.class.getDeclaredField("origin");
         field.setAccessible(true);
@@ -52,9 +64,15 @@ public final class RootManager implements HasManager, Propagator {
         return returnableObject;
     }
 
+    public void setNodeProvider(NodeProvider nodeProvider) {
+        this.nodeProvider = nodeProvider;
+    }
+
     public ReturnableObject<?> sendOver(EventObject eventObject)
             throws ReflectiveOperationException, RemoteException, MalformedEventException {
-        return interComUnit.sendOver(eventObject);
+        ReturnableObject<?> returnableObject = null;
+        returnableObject = nodeProvider.getNode().call(nodeProvider.middleware(eventObject));
+        return returnableObject;
     }
 
     @Override

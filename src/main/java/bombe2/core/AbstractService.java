@@ -1,6 +1,6 @@
 package bombe2.core;
 
-import bombe2.annotations.MethodVisibility;
+import bombe2.annotations.ExportMethod;
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.core.definitions.Propagator;
@@ -80,8 +80,8 @@ public abstract class AbstractService implements Propagator {
                 this.getClass()
                         .getMethod(eventObject.getMethod(), eventObject.getTypes());
 
-        MethodVisibility methodVisibility;
-        if ((methodVisibility = method.getAnnotation(MethodVisibility.class)) == null)
+        ExportMethod methodVisibility;
+        if ((methodVisibility = method.getAnnotation(ExportMethod.class)) == null)
             throw new PropagationException("Method visibility not defined at " + getPath());
         if (!EventObject.visibilityTest(eventObject.getOrigin(),methodVisibility.visibility()))
             throw new PropagationException(

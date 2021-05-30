@@ -50,7 +50,6 @@ public class DatabaseComUnit extends UnicastRemoteObject implements InterComUnit
         super();
         this.propagator = propagator;
         this.port = port;
-
         createNode();
         Runtime.getRuntime().addShutdownHook(shutdownThread);
     }

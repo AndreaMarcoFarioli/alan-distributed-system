@@ -1,5 +1,14 @@
+<<<<<<< Updated upstream
+import bombe2.distributed.DatabaseSessionManager;
+
+public class Main {
+    public static void main(String[] args) {
+        DatabaseSessionManager databaseSessionManager = new DatabaseSessionManager();
+        databaseSessionManager.createSession();
+        System.out.println("ciao");
+=======
 import bombe2.core.Manager;
-import bombe2.core.SessionManager;
+import bombe2.core.SessionReference;
 import bombe2.core.data.EventObject;
 import bombe2.core.data.ReturnableObject;
 import bombe2.distributed.*;
@@ -7,19 +16,16 @@ import bombe2.distributed.database_implementation.DatabaseSessionManager;
 import bombe2.exceptions.MalformedEventException;
 import bombe2.distributed.database_implementation.DatabaseComUnit;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Main {
     public static int port = 1000 + (int)(Math.random()*100);
     public static void main(String[] args) throws Exception {
-        System.out.println("im "+ port);
-        //SessionReference sessionReference = SystemSessionReference.getInstance();
-        //sessionReference.getStorage().setParameter("port", port);
 
         Registry registry = LocateRegistry.createRegistry(port);
 
@@ -33,21 +39,18 @@ public class Main {
 
         manager.addService(new MathService());
 
+        comUnit.setNodeAvailability(false);
+
+        Thread.sleep(10000);
+
         comUnit.setNodeAvailability(true);
 
-        Timer timer = new Timer();
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    RootManager.getInstance().getManager().propagate(new EventObject("math:test", port));
-                } catch (ReflectiveOperationException e) {
-                    e.printStackTrace();
-                } catch (MalformedEventException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 0, 1000);
+        DatabaseSessionManager databaseSessionManager = new DatabaseSessionManager();
+        SessionReference sessionReference = databaseSessionManager.createSession();
+        sessionReference.getStorage().setParameter("var1", "ciao");
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
     }
 }
