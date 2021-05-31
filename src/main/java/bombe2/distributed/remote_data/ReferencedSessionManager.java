@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-public class ReferencedSessionManager extends SessionManager {
+public final class ReferencedSessionManager extends SessionManager {
     private final String host, name;
     private final int port;
     private final IRemoteSessionManager remoteManager;

@@ -7,8 +7,7 @@ import bombe2.exceptions.SessionException;
 
 import java.rmi.RemoteException;
 
-//Tecnicamente questa classe dovrebbe sembrare un proxy, ma estende una classe e non va bene xd
-public class ReferencedSessionReference extends SessionReference {
+public final class ReferencedSessionReference extends SessionReference {
     private final IRemoteSessionReference remoteSessionReference;
     protected ReferencedSessionReference(SessionManager sessionManager, IRemoteSessionReference remoteSessionReference) {
         super(sessionManager, null, null);

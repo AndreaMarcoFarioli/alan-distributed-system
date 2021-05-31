@@ -6,7 +6,7 @@ import bombe2.distributed.database_implementation.DatabaseStorage;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class RemoteStorage extends UnicastRemoteObject implements IRemoteStorage {
+public final class RemoteStorage extends UnicastRemoteObject implements IRemoteStorage {
     private final Storage storage;
     public RemoteStorage(Storage storage) throws RemoteException {
         this.storage = storage;

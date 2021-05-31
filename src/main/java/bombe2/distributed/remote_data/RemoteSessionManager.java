@@ -7,7 +7,7 @@ import bombe2.distributed.remote_data.IRemoteSessionManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class RemoteSessionManager extends UnicastRemoteObject implements IRemoteSessionManager {
+public final class RemoteSessionManager extends UnicastRemoteObject implements IRemoteSessionManager {
     private final SessionManager sessionManager;
 
     public RemoteSessionManager(SessionManager sessionManager) throws RemoteException {
