@@ -12,8 +12,8 @@ public class LocalStorage implements Storage{
     }
 
     @Override
-    public Object getParameter(String name, Class<?> type) {
-        return parameters.get(name);
+    public <T>T getParameter(String name, Class<T> type) {
+        return type.cast(parameters.get(name));
     }
 
     @Override

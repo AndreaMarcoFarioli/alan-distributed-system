@@ -11,6 +11,6 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MethodVisibility {
+public @interface ExportMethod {
     VisibilityType visibility() default VisibilityType.PROTECTED;
 }
