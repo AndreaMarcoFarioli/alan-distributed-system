@@ -25,12 +25,12 @@ public class DatabaseComUnit extends UnicastRemoteObject implements InterComChan
 
     private static final String
         createNode = "INSERT INTO node (host, port) VALUES (?, ?)",
-        selectNodeForUpdate = "SELECT * FROM node WHERE available=true AND score = (SELECT MIN(score) FROM node WHERE available=true) ORDER BY rand() ASC LIMIT 1 FOR UPDATE",
-        updateScoreNode = "UPDATE node SET score = score %s 1 WHERE id = ?",
+        selectNodeForUpdate = "SELECT * FROM node WHERE available=true AND active_processes = (SELECT MIN(active_processes) FROM node WHERE available=true) ORDER BY rand() ASC LIMIT 1 FOR UPDATE",
+        updateScoreNode = "UPDATE node SET active_processes = active_processes %s 1 WHERE id = ?",
         deleteNode = "DELETE FROM node WHERE id = ?",
         setAvailability = "UPDATE node SET available = ? WHERE id = ?",
-        createProcess = "INSERT INTO inter_process (local_node, remote_node) VALUES (?,?)",
-        clearProcess = "DELETE FROM inter_process WHERE id=?";
+        createProcess = "INSERT INTO process (source_node, destination_node) VALUES (?,?)",
+        clearProcess = "UPDATE process SET alive=false WHERE id=?";
 
     private boolean isClosed = false,sdHookCall = false;
 

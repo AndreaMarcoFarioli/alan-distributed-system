@@ -10,11 +10,11 @@ import java.sql.*;
 
 public final class DatabaseSessionManager extends SessionManager {
     private static final String
-            createSessionQuery = "INSERT INTO session_storage (sid) VALUES (?)",
-            getSessionBySid = "SELECT sid FROM session_storage WHERE sid=?",
-            destroySession = "DELETE FROM session_storage WHERE sid=?",
-            countQuery = "SELECT COUNT(*) FROM session_storage",
-            destroyAll = "DELETE FROM session_storage WHERE 1";
+            createSessionQuery = "INSERT INTO session (sid) VALUES (?)",
+            getSessionBySid = "SELECT sid FROM session WHERE sid=?",
+            destroySession = "DELETE FROM session WHERE sid=?",
+            countQuery = "SELECT COUNT(*) FROM session",
+            destroyAll = "DELETE FROM session WHERE 1";
 
     public DatabaseSessionManager(){
         try {
