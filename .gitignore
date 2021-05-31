@@ -1,2 +1,3 @@
-/src/test/java/
-/target/
+src/test/
+target/
+*.class
