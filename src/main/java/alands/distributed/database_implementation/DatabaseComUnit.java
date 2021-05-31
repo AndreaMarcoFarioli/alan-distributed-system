@@ -30,7 +30,7 @@ public class DatabaseComUnit extends UnicastRemoteObject implements InterComChan
         deleteNode = "DELETE FROM node WHERE id = ?",
         setAvailability = "UPDATE node SET available = ? WHERE id = ?",
         createProcess = "INSERT INTO process (source_node, destination_node) VALUES (?,?)",
-        clearProcess = "UPDATE process SET alive=false WHERE id=?";
+        clearProcess = "UPDATE process SET alive=false, dead_time=unix_timestamp() WHERE id=?";
 
     private boolean isClosed = false,sdHookCall = false;
 

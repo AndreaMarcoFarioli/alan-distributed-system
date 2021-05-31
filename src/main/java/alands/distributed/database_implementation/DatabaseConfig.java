@@ -1,15 +1,18 @@
 package alands.distributed.database_implementation;
 
+import alands.distributed.EnvLoader;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConfig {
-    public static final String host = "localhost";
-    public static final String dbName = "alandb";
-    public static final String connection = "jdbc:mysql://"+host+"/"+dbName;
-    public static final String username = "root";
-    public static final String password = "";
+    private static String host = "localhost";
+    private static String dbName = "alandb";
+    private static String connection = "jdbc:mysql://"+host+"/"+dbName;
+    private static String username = "root";
+    private static String password = "";
+    private static Integer port = 3306;
 
     static {
         try {
@@ -21,5 +24,15 @@ public class DatabaseConfig {
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(connection, username, password);
+    }
+
+    public static void setFromEnv(EnvLoader envLoader){
+        host = envLoader.getString("dbhost");
+        dbName = envLoader.getString("dbname");
+        username = envLoader.getString("dbuser");
+        password = envLoader.getString("dbpass");
+        if ((port = envLoader.getInt("dbport")) == null)
+            port = 3306;
+        connection = "jdbc:mysql://"+host+"/"+dbName;
     }
 }
