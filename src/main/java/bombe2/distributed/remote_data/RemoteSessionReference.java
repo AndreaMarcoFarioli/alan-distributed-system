@@ -5,7 +5,7 @@ import bombe2.core.SessionReference;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class RemoteSessionReference extends UnicastRemoteObject implements IRemoteSessionReference {
+public final class RemoteSessionReference extends UnicastRemoteObject implements IRemoteSessionReference {
     private final SessionReference sessionReference;
     public RemoteSessionReference(SessionReference sessionReference) throws RemoteException {
         this.sessionReference = sessionReference;
