@@ -5,7 +5,7 @@ import bombe2.exceptions.SessionException;
 
 import java.rmi.RemoteException;
 
-public class ReferencedStorage implements Storage {
+public final class ReferencedStorage implements Storage {
     private final IRemoteStorage remoteStorage;
     public ReferencedStorage(IRemoteStorage remoteStorage){
         this.remoteStorage = remoteStorage;
