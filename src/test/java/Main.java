@@ -7,6 +7,9 @@ import bombe2.distributed.database_implementation.DatabaseSessionManager;
 import bombe2.exceptions.MalformedEventException;
 import bombe2.distributed.database_implementation.DatabaseComUnit;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

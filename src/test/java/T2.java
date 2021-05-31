@@ -10,7 +10,10 @@ public class T2 {
         SessionReference sessionReference = referencedSessionManager.createSession();
         System.out.println(sessionReference.getSessionId());
         Storage storage = sessionReference.getStorage();
+        System.out.println(sessionReference.isOpened());
         sessionReference.destroy();
+       // System.out.println(referencedSessionManager.getSession(sessionReference.getSessionId()));
+        System.out.println(sessionReference.isOpened());
         storage.setParameter("ciccio", "andrea");
         System.out.println(storage.getParameter("ciccio", String.class));
     }

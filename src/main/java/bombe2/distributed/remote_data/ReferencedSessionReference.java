@@ -7,6 +7,7 @@ import bombe2.exceptions.SessionException;
 
 import java.rmi.RemoteException;
 
+//Tecnicamente questa classe dovrebbe sembrare un proxy, ma estende una classe e non va bene xd
 public class ReferencedSessionReference extends SessionReference {
     private final IRemoteSessionReference remoteSessionReference;
     protected ReferencedSessionReference(SessionManager sessionManager, IRemoteSessionReference remoteSessionReference) {
@@ -27,8 +28,17 @@ public class ReferencedSessionReference extends SessionReference {
     @Override
     public Storage getStorage() {
         try {
-            System.out.println();
             return new ReferencedStorage(remoteSessionReference.getStorage());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            throw new SessionException();
+        }
+    }
+
+    @Override
+    public boolean isOpened() {
+        try {
+            return remoteSessionReference.isOpened();
         } catch (RemoteException e) {
             e.printStackTrace();
             throw new SessionException();

@@ -49,6 +49,7 @@ public final class DatabaseSessionManager extends SessionManager {
             PreparedStatement ps = connection.prepareStatement(getGetSessionBySid());
             ps.setString(1, sessionId);
             ResultSet resultSet = ps.executeQuery();
+            System.out.println(sessionId);
             if (!resultSet.next())
                 throw new NoSuchSessionException("Session " + sessionId + " not found");
             sessionReference = new DatabaseSessionReference(this, sessionId);

@@ -6,7 +6,6 @@ import bombe2.exceptions.NoSuchSessionException;
 import bombe2.exceptions.SessionException;
 
 public abstract class SessionReference implements ISessionReference {
-    private boolean opened = true;
     private final SessionManager sessionManager;
     private final String sessionId;
     private Storage storage;
@@ -24,8 +23,7 @@ public abstract class SessionReference implements ISessionReference {
 
     @Override
     public void destroy(){
-        getReference().sessionManager.destroySession(sessionId);
-        opened = false;
+        getReference().sessionManager.destroySession(getSessionId());
     }
 
     @Override
@@ -35,12 +33,19 @@ public abstract class SessionReference implements ISessionReference {
 
     @Override
     public boolean isOpened() {
+        boolean opened = true;
+        try {
+            getReference();
+        }catch (SessionException sessionException){
+            opened = false;
+            sessionException.printStackTrace();
+        }
         return opened;
     }
 
     @Override
     public final SessionReference getReference(){
-        if (!isOpened() || !sessionManager.available(sessionId))
+        if (!sessionManager.available(getSessionId()))
             throw new SessionException("Session " + sessionId + " is closed or does not exist anymore");
         return this;
     }
