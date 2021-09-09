@@ -7,12 +7,12 @@ public class LocalStorage implements Storage{
     private final Map<String, Object> parameters = new HashMap<>();
 
     @Override
-    public <T> void setParameter(String name, T value) {
+    public <T> void set(String name, T value) {
         parameters.put(name, value);
     }
 
     @Override
-    public <T>T getParameter(String name, Class<T> type) {
+    public <T>T get(String name, Class<T> type) {
         return type.cast(parameters.get(name));
     }
 

@@ -8,6 +8,7 @@ import alands.exceptions.SessionException;
 
 import java.sql.*;
 
+@Deprecated
 public final class DatabaseSessionManager extends SessionManager {
     private static final String
             createSessionQuery = "INSERT INTO session (sid) VALUES (?)",

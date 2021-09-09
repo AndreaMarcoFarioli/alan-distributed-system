@@ -12,13 +12,13 @@ public final class RemoteStorage extends UnicastRemoteObject implements IRemoteS
     }
 
     @Override
-    public <T> void setParameter(String name, T value) throws RemoteException {
-        storage.setParameter(name, value);
+    public <T> void set(String name, T value) throws RemoteException {
+        storage.set(name, value);
     }
 
     @Override
-    public <T> T getParameter(String name, Class<T> type) throws RemoteException {
-        return storage.getParameter(name, type);
+    public <T> T get(String name, Class<T> type) throws RemoteException {
+        return storage.get(name, type);
     }
 
     @Override

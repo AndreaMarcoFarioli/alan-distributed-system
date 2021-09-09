@@ -15,7 +15,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
 
-public class DatabaseComUnit extends UnicastRemoteObject implements InterComChannel, AutoCloseable {
+@Deprecated
+public class DatabaseComUnit extends UnicastRemoteObject implements InterComChannel, AutoCloseable, RemoteNode {
 
     private final Propagator propagator;
 

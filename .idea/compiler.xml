@@ -7,9 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="DistributedSystem" />
-        <module name="bombe2.0" />
-        <module name="alan-distributed-system" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="DistributedSystem" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

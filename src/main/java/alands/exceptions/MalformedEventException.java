@@ -8,6 +8,5 @@ public final class MalformedEventException extends IOException {
     }
 
     public MalformedEventException(){
-
     }
 }

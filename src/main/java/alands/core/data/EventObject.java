@@ -30,7 +30,7 @@ public final class EventObject implements Serializable {
     //endregion
 
     public static final String EVENT_PATTERN =
-            "^(?:(?:(?<fork>[a-z0-9_\\-]+)#)?(?<whole>(?<first>(?:[a-z0-9]+|\\^))(\\.(?<second>(?:[a-z0-9]+|\\^)))?(?:(?:\\.(?:[a-z0-9]+|\\^))+)?:))?(?<method>[a-z](?:[a-z0-9]+)?)$";
+            "^(?:(?:(?<fork>[\\w\\-]+)#)?(?<whole>(?<first>(?:[\\w]+|\\^))(?:\\.(?<second>(?:[\\w]+|\\^)))?(?:(?:\\.(?:[\\w]+|\\^))+)?:))?(?<method>[_a-z](?:[\\w]+)?)$";
     public static final Pattern COMPILED_PATTERN =
             Pattern.compile(EVENT_PATTERN, Pattern.CASE_INSENSITIVE);
     public final static String WHOLE = "whole", FIRST = "first", METHOD = "method", FORK = "fork", SECOND = "second";

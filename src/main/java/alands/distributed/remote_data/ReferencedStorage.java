@@ -12,18 +12,18 @@ public final class ReferencedStorage implements Storage {
     }
 
     @Override
-    public <T> void setParameter(String name, T value) {
+    public <T> void set(String name, T value) {
         try {
-            remoteStorage.setParameter(name, value);
+            remoteStorage.set(name, value);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public <T> T getParameter(String name, Class<T> type) {
+    public <T> T get(String name, Class<T> type) {
         try {
-            return remoteStorage.getParameter(name, type);
+            return remoteStorage.get(name, type);
         } catch (RemoteException e) {
             e.printStackTrace();
             throw new SessionException();
