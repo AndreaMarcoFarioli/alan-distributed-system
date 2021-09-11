@@ -8,7 +8,7 @@ import java.util.Set;
 public class RemoteProperties extends UnicastRemoteObject implements IRemoteProperties {
     private final Properties properties;
 
-    protected RemoteProperties(Properties properties) throws RemoteException {
+    public RemoteProperties(Properties properties) throws RemoteException {
         this.properties = properties;
     }
 

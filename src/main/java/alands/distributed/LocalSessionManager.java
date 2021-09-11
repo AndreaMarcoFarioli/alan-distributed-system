@@ -5,9 +5,10 @@ import alands.core.SessionReference;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class LocalSessionManager extends SessionManager {
-    private final Map<String, SessionReference> sessionMap = new HashMap<>();
+    private final Map<String, SessionReference> sessionMap = new ConcurrentHashMap<>();
 
     @Override
     public SessionReference createSession() {

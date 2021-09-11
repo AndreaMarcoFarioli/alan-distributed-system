@@ -9,23 +9,18 @@ import alands.core.definitions.Propagator;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public final class RootManager extends UnicastRemoteObject implements Propagator, HasManager {
+public final class RootManager implements Propagator, HasManager {
     private final Manager manager = new Manager();
     private InterComChannel interComChannel;
 
     private static RootManager instance = null;
 
-    private RootManager() throws RemoteException {
+    private RootManager() {
     }
 
     public static RootManager getInstance(){
-        if (instance == null) {
-            try {
-                instance = new RootManager();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
+        if (instance == null)
+            instance = new RootManager();
         return instance;
     }
 

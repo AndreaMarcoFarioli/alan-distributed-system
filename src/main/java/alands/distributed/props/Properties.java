@@ -12,7 +12,6 @@ public interface Properties {
             "^\\s*(?<key>\\w+)\\s*=\\s*(?<value>.+)(?<=\\S)\\s*$";
     Pattern pattern = Pattern.compile(patternString);
     String NAME = "key", VALUE = "value";
-
     Set<String> getKeySet();
 
     Collection<String> getValues();
@@ -22,6 +21,10 @@ public interface Properties {
     int getInt(String key);
 
     boolean getBool(String key);
+
+    default String[] getArrayString(String key){
+        return getString(key).split("(?:\\s*)?,(?:\\s*)?");
+    }
 
     String setProperty(String key, String value);
 

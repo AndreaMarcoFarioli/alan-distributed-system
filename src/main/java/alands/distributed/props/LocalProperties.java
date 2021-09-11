@@ -2,9 +2,10 @@ package alands.distributed.props;
 
 import java.io.*;
 import java.util.Collection;
-import java.util.HashMap;
+
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LocalProperties implements Properties {
     private final Map<String, String> propertyMap;
@@ -14,7 +15,7 @@ public class LocalProperties implements Properties {
     }
 
     public LocalProperties(Map<String, String> propertyMap){
-        this.propertyMap = propertyMap == null ? new HashMap<>() : propertyMap;
+        this.propertyMap = propertyMap == null ? new ConcurrentHashMap<>() : propertyMap;
     }
 
     public static LocalProperties loadFromStreamReader(BufferedReader bufferedReader)
@@ -22,6 +23,15 @@ public class LocalProperties implements Properties {
         LocalProperties properties = new LocalProperties();
         Properties.addAll(properties, bufferedReader);
         return properties;
+    }
+
+    public static LocalProperties loadFromFile(File file)
+            throws IOException {
+        return loadFromStreamReader(
+                new BufferedReader(
+                        new InputStreamReader(
+                            new FileInputStream(file)
+                        )));
     }
 
     @Override

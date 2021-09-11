@@ -6,8 +6,7 @@
 
     <groupId>org.alan</groupId>
     <artifactId>DistributedSystem</artifactId>
-    <version>1.0.1-rpg</version>
-
+    <version>1.0.2-properties</version>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
