@@ -5,6 +5,6 @@ import alands.core.data.ReturnableObject;
 
 import java.rmi.RemoteException;
 
-public interface InterComChannel{
+public interface OutgoingChannel {
     ReturnableObject<?> sendOver(EventObject eventObject) throws RemoteException, ReflectiveOperationException;
 }

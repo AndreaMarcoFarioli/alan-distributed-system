@@ -5,24 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b18a6cc-fe26-405a-8b2f-f1e666c9a3e3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/alands/beta/Operations.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/alands/beta/VeryLongInt.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/alands/core/data/GlobalStorage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/alands/core/data/HeavyObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/InterComUnit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/remote_data/RemoteDeleter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/remote_data/RemoteGetter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/remote_data/RemoteItemManipulator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/remote_data/RemoteSetter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ciccio" beforeDir="false" afterPath="$PROJECT_DIR$/cluster_properties.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/LocalSessionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/LocalSessionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/InterComChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/OutgoingChannel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/InterComUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/CommunicationUnit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/RemoteNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/IncomingChannel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/RootManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/RootManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/props/LocalProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/props/LocalProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/props/Properties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/props/Properties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/props/RemoteProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/props/RemoteProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/database_implementation/DatabaseComUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/database_implementation/DatabaseComUnit.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

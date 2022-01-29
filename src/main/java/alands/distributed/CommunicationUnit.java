@@ -7,17 +7,17 @@ import alands.core.definitions.Propagator;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class InterComUnit extends UnicastRemoteObject implements InterComChannel, RemoteNode{
+public class CommunicationUnit extends UnicastRemoteObject implements OutgoingChannel, IncomingChannel {
     private final Propagator propagator;
-    private final InterComChannel interComChannel;
-    public InterComUnit(Propagator propagator, InterComChannel interComChannel) throws RemoteException {
+    private final OutgoingChannel outgoingChannel;
+    public CommunicationUnit(Propagator propagator, OutgoingChannel outgoingChannel) throws RemoteException {
         this.propagator = propagator;
-        this.interComChannel = interComChannel;
+        this.outgoingChannel = outgoingChannel;
     }
 
     @Override
     public ReturnableObject<?> sendOver(EventObject eventObject) throws RemoteException, ReflectiveOperationException {
-        return interComChannel.sendOver(eventObject);
+        return outgoingChannel.sendOver(eventObject);
     }
 
     @Override

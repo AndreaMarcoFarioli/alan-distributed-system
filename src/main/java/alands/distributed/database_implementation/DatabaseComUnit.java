@@ -3,8 +3,8 @@ package alands.distributed.database_implementation;
 import alands.core.data.EventObject;
 import alands.core.data.ReturnableObject;
 import alands.core.definitions.Propagator;
-import alands.distributed.InterComChannel;
-import alands.distributed.RemoteNode;
+import alands.distributed.OutgoingChannel;
+import alands.distributed.IncomingChannel;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -16,7 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.*;
 
 @Deprecated
-public class DatabaseComUnit extends UnicastRemoteObject implements InterComChannel, AutoCloseable, RemoteNode {
+public class DatabaseComUnit extends UnicastRemoteObject implements OutgoingChannel, AutoCloseable, IncomingChannel {
 
     private final Propagator propagator;
 
@@ -115,8 +115,8 @@ public class DatabaseComUnit extends UnicastRemoteObject implements InterComChan
                     pid = createProcess(connection, this.id, id);
                     connection.commit();
                     connection.setAutoCommit(true);
-                    RemoteNode remoteNode = getRemoteNode(host, port);
-                    returnableObject = remoteNode.call(eventObject);
+                    IncomingChannel incomingChannel = getRemoteNode(host, port);
+                    returnableObject = incomingChannel.call(eventObject);
                 } else
                     throw new SQLException("Something went wrong, node not found");
             } catch (SQLException | NotBoundException e){
@@ -177,9 +177,9 @@ public class DatabaseComUnit extends UnicastRemoteObject implements InterComChan
             throw new SQLException("Something went wrong during the process clearing");
     }
 
-    private RemoteNode getRemoteNode(String host, int port) throws RemoteException, NotBoundException {
+    private IncomingChannel getRemoteNode(String host, int port) throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(host, port);
-        return (RemoteNode) registry.lookup("com");
+        return (IncomingChannel) registry.lookup("com");
     }
 
     @Override
