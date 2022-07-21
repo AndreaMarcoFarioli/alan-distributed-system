@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1b18a6cc-fe26-405a-8b2f-f1e666c9a3e3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/InterComChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/OutgoingChannel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/InterComUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/CommunicationUnit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/RemoteNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/IncomingChannel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/RootManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/RootManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/alands/distributed/database_implementation/DatabaseComUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/alands/distributed/database_implementation/DatabaseComUnit.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
